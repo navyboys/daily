@@ -430,8 +430,19 @@ label[for='toggle-all'] {
 	appearance: none;
 }
 
-.todo-list li .toggle:after {
-	content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#ededed" stroke-width="3"/></svg>');
+.todo-list li .markComplete {
+  position: absolute;
+	top: 0;
+	left: 10px;
+	bottom: 0;
+	width: 30px;
+	height: 30px;
+	margin: auto 0;
+	font-size: 20px;
+	/*color: #cc9a9a;*/
+  color: #90C5A9;
+	margin-bottom: 15px;
+	transition: color 0.2s ease-out;
 }
 
 .todo-list li .toggle:checked:after {
@@ -453,17 +464,16 @@ label[for='toggle-all'] {
 }
 
 .todo-list li .destroy {
-	display: none;
 	position: absolute;
 	top: 0;
 	right: 10px;
 	bottom: 0;
-	width: 40px;
-	height: 40px;
+	width: 30px;
+	height: 30px;
 	margin: auto 0;
-	font-size: 30px;
-	color: #cc9a9a;
-	margin-bottom: 11px;
+	font-size: 20px;
+  color: #90C5A9;
+	margin-bottom: 15px;
 	transition: color 0.2s ease-out;
 }
 
@@ -472,7 +482,7 @@ label[for='toggle-all'] {
 }
 
 .todo-list li .destroy:after {
-	content: '×';
+	/*content: '×';*/
 }
 
 .todo-list li:hover .destroy {

@@ -36,15 +36,19 @@ class TodoItem extends Component {
     } else {
       element = (
         <div className="view">
-          <input className="toggle"
-                 type="checkbox"
-                 checked={todo.completed}
-                 onChange={() => completeTodo(todo.id)} />
-          <label onDoubleClick={this.handleDoubleClick.bind(this)}>
-            {todo.text}
+
+          <button type="button" className="markComplete" onClick={() => completeTodo(todo.id) }>
+            <span className="glyphicon glyphicon-ok" aria-hidden="false"></span>
+          </button>
+          <label onClick={() =>
+                  completeTodo(todo.id)}
+            onDoubleClick={this.handleDoubleClick.bind(this)}> {todo.text}
           </label>
-          <button className="destroy"
-                  onClick={() => deleteTodo(todo.id)} />
+
+          <button type="button" className= "destroy"
+                  onClick={() => deleteTodo(todo.id)} >
+            <span className="glyphicon glyphicon-remove" aria-hidden="false"></span>
+          </button>
         </div>
       )
     }
