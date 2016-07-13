@@ -304,7 +304,7 @@ body {
 	color: #e6e6e6;
 }
 
-.pageHeader {
+.currentDayName {
   position: absolute;
   top: -20px;
   margin-left: auto;
