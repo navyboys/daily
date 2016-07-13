@@ -9,7 +9,8 @@ module.exports = {
     },
     seeds: {
       directory: __dirname + '/seeds'
-    }
+    },
+    useNullAsDefault: true
   },
   staging: {
     client: 'postgresql',

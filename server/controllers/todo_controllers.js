@@ -1,12 +1,11 @@
 var Todo = require('../models/todo');
 
 module.exports.getTodos = function(req, res){
-  req.params.user_id = 1;
-  req.params.day = 'day';
+  // req.params.user_id = 1;
+  // req.params.date = '2016-07-12';
 
   var user_id = req.params.user_id;
-  var day = req.params.day; // 'today' or 'previous'
-  var date = '2016-07-13'; // TODO need inplementment
+  var date = req.params.date;
 
   Todo.where({user_id: user_id, due: date})
       .fetchAll()
