@@ -1,8 +1,8 @@
 module.exports = {
   development: {
-    client: 'postgresql',
+    client: 'sqlite3',
     connection: {
-      database: 'daily',
+      filename: __dirname + '/daily.sqlite'
     },
     migrations: {
       directory: __dirname + '/migrations'
@@ -15,12 +15,24 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'daily',
+    },
+    migrations: {
+      directory: __dirname + '/migrations'
+    },
+    seeds: {
+      directory: __dirname + '/seeds'
     }
   },
   production: {
     client: 'postgresql',
     connection: {
       database: 'daily',
+    },
+    migrations: {
+      directory: __dirname + '/migrations'
+    },
+    seeds: {
+      directory: __dirname + '/seeds'
     }
   }
 };

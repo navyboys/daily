@@ -1,12 +1,22 @@
-var Todo = require('../models/Todo');
+var Todo = require('../models/todo');
 
 module.exports.getTodos = function(req, res){
-  Todo.fetchAll().exec((err, todos) => {
-    if (err) {
-      res.status(500).send(err);
+  req.params.user_id = 1;
+  req.params.day = 'day';
+
+  var user_id = req.params.user_id;
+  var day = req.params.day; // 'today' or 'previous'
+  var date = '2016-07-13'; // TODO need inplementment
+
+  Todo.where({user_id: user_id, due: date})
+      .fetchAll()
+      .then((err, todos) => {
+        if (err) {
+          res.status(500).send(err);
+        }
+        res.json(todos);
     }
-    res.json(todos);
-  });
+  );
 };
 
 // export function addPost(req, res) {
