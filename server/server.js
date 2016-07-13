@@ -2,28 +2,28 @@ var path = require('path');
 var express = require('express');
 
 var app = express();
-var port = 3000
+var port = 3000;
 
-var webpack = require('webpack')
-var webpackDevMiddleware = require('webpack-dev-middleware')
-var webpackHotMiddleware = require('webpack-hot-middleware')
-var webpack_config = require('../webpack.config')
+var webpack = require('webpack');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
+var webpack_config = require('../webpack.config');
 
-var compiler = webpack(webpack_config)
-app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpack_config.output.publicPath }))
-app.use(webpackHotMiddleware(compiler))
+var compiler = webpack(webpack_config);
+app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpack_config.output.publicPath }));
+app.use(webpackHotMiddleware(compiler));
 
 var api_todo_router = require('./routes/todo_routes');
 app.use('/api', api_todo_router);
 
 app.get("/", function(req, res) {
-  res.sendFile(path.resolve(__dirname, '../public/index.html'))
-})
+  res.sendFile(path.resolve(__dirname, '../public/index.html'));
+});
 
 app.listen(port, function(error) {
   if (error) {
-    console.error(error)
+    console.error(error);
   } else {
-    console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port)
+    console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port);
   }
-})
+});

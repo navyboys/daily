@@ -1,6 +1,5 @@
-var bookshelf = require('../db/db.js').bookshelf;
-bookshelf.plugin('registry');
-var user = require('./User.js');
+var bookshelf = require('../db/db').bookshelf;
+var User = require('./user');
 
 var Todo = bookshelf.Model.extend({
   tableName: 'todos',
