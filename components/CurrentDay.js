@@ -5,7 +5,7 @@ export default React.createClass({
   render: function() {
     return (
       <div>
-        <Datetime className="currentDayName" defaultValue={date} open={false}/>
+        <Datetime className="calendar" defaultValue={date} open={false}/>
       </div>
       )
     }

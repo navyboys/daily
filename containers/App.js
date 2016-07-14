@@ -5,6 +5,8 @@ import Header from '../components/Header'
 import MainSection from '../components/MainSection'
 import * as TodoActions from '../actions'
 import CurrentDay from '../components/CurrentDay'
+import ShowCalendarBtn from '../components/ShowCalendarBtn'
+
 
 class App extends Component {
   render() {
@@ -12,6 +14,7 @@ class App extends Component {
     return (
       <div>
         <CurrentDay />
+        <ShowCalendarBtn />
         <Header addTodo={actions.addTodo} />
         <MainSection todos={todos} actions={actions} />
       </div>

@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import TodoTextInput from './TodoTextInput'
-import ShowCalendarBtn from './ShowCalendarBtn'
+
 var moment = require('moment')
 
 var today = moment().format('dddd');
@@ -20,7 +20,6 @@ class Header extends Component {
                            onSave={this.handleSave.bind(this)}
                            placeholder="Add a task..." />
         </header>
-        <ShowCalendarBtn />
       </div>
     )
   }
