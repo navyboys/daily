@@ -1,11 +1,9 @@
 var Todo = require('../models/todo');
+var strftime = require('strftime');
 
 module.exports.getTodos = function(req, res){
-  // req.params.user_id = 1;
-  // req.params.date = '2016-07-12';
-
-  var user_id = req.params.user_id;
-  var date = req.params.date;
+  var user_id = req.query.user_id;
+  var date = req.query.date;
 
   Todo.where({user_id: user_id, due: date})
       .fetchAll()
@@ -18,37 +16,24 @@ module.exports.getTodos = function(req, res){
   );
 };
 
-// export function addPost(req, res) {
-//   if (!req.body.post.name || !req.body.post.title || !req.body.post.content) {
+// module.exports.addTodo = function(req, res){
+//   if (!req.body.user_id || !req.body.todo.title) {
 //     res.status(403).end();
 //   }
 //
-//   const newPost = new Post(req.body.post);
+//   var newTodo = new Todo(req.body.todo);
 //
-//   // Let's sanitize inputs
-//   newPost.title = sanitizeHtml(newPost.title);
-//   newPost.name = sanitizeHtml(newPost.name);
-//   newPost.content = sanitizeHtml(newPost.content);
+//   newTodo.status = 'open';
+//   newTodo.due = strftime('%F', new Date());
 //
-//   newPost.slug = slug(newPost.title.toLowerCase(), { lowercase: true });
-//   newPost.cuid = cuid();
-//   newPost.save((err, saved) => {
+//   newTodo.save((err, saved) => {
 //     if (err) {
 //       res.status(500).send(err);
 //     }
-//     res.json({ post: saved });
+//     res.json({ todo: saved });
 //   });
-// }
-//
-// export function getPost(req, res) {
-//   Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
-//     if (err) {
-//       res.status(500).send(err);
-//     }
-//     res.json({ post });
-//   });
-// }
-//
+// };
+
 // export function deletePost(req, res) {
 //   Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
 //     if (err) {
