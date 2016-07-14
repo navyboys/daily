@@ -34,14 +34,13 @@ module.exports.getTodos = function(req, res){
 //   });
 // };
 
-// export function deletePost(req, res) {
-//   Post.findOne({ cuid: req.params.cuid }).exec((err, post) => {
-//     if (err) {
-//       res.status(500).send(err);
-//     }
-//
-//     post.remove(() => {
-//       res.status(200).end();
-//     });
-//   });
-// }
+module.exports.deleteTodo = function(req, res){
+  Todo.where({id: req.params.id})
+      .fetch()
+      .then((todo) => {
+        todo.destroy().then(() => {
+          res.status(200).end();
+        });
+      }
+  );
+};
