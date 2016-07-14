@@ -5,6 +5,8 @@ module.exports.getTodos = function(req, res){
   var user_id = req.query.user_id;
   var date = req.query.date;
 
+  console.log(req.query.user_id);
+
   Todo.where({user_id: user_id, due: date})
       .fetchAll()
       .then((err, todos) => {
