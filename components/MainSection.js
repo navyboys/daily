@@ -3,6 +3,7 @@ import TodoItem from './TodoItem'
 import Footer from './Footer'
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters'
 
+//object that contains the logic to manage the todo item display filters
 const TODO_FILTERS = {
   [SHOW_ALL]: () => true,
   [SHOW_ACTIVE]: todo => !todo.completed,
@@ -28,7 +29,7 @@ class MainSection extends Component {
     if (todos.length > 0) {
       return (
         <input className="toggle-all"
-               type="checkbox"
+
                checked={completedCount === todos.length}
                onChange={actions.completeAll} />
       )
@@ -57,8 +58,7 @@ class MainSection extends Component {
 
     const filteredTodos = todos.filter(TODO_FILTERS[filter])
     const completedCount = todos.reduce((count, todo) =>
-      todo.completed ? count + 1 : count,
-      0
+      todo.completed ? count + 1 : count, 0
     )
 
     return (
