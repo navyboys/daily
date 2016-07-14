@@ -4,5 +4,4 @@ npm-debug.log
 dist
 .jshintrc
 
-/server/db/*.sqlite3
-/server/db/*.sqlite3-journal
+/server/db/*.sqlite
