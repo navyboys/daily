@@ -5,17 +5,14 @@ module.exports.getTodos = function(req, res){
   var user_id = req.query.user_id;
   var date = req.query.date;
 
-  console.log(req.query.user_id);
-
   Todo.where({user_id: user_id, due: date})
       .fetchAll()
-      .then((err, todos) => {
-        if (err) {
-          res.status(500).send(err);
-        }
-        res.json(todos);
-    }
-  );
+      .then(function (collection) {
+        res.json({error: false, data: collection.toJSON()});
+      })
+      .catch(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
 };
 
 module.exports.addTodo = function(req, res){
@@ -27,21 +24,42 @@ module.exports.addTodo = function(req, res){
   newTodo.set('status', 'open');
   newTodo.set('due', strftime('%F', new Date()));
 
-  newTodo.save().then((err, saved) => {
-    if (err) {
-     res.status(500).send(err);
-    }
-    res.json(saved);
-  });
+  newTodo.save()
+         .then(function (todo) {
+           res.json({error: false, data: {id: todo.id}});
+         })
+         .catch(function (err) {
+           res.status(500).json({error: true, data: {message: err.message}});
+         });
+};
+
+module.exports.updateTodo = function(req, res){
+  Todo.where({id: req.params.id})
+      .fetch()
+      .then((todo) => {
+        todo.save({
+          title: req.body.title,
+          status: req.body.status
+        })
+        .then(function() {
+          res.json({error: false, data: {message: 'Todo details updated'}});
+        })
+        .catch(function(err) {
+          res.status(500).json({error: true, data: {message: err.message}});
+        });
+      });
 };
 
 module.exports.deleteTodo = function(req, res){
   Todo.where({id: req.params.id})
       .fetch()
       .then((todo) => {
-        todo.destroy().then(() => {
-          res.status(200).end();
+        todo.destroy()
+        .then(function () {
+          res.json({error: false, data: {message: 'Todo successfully deleted'}});
+        })
+        .catch(function (err) {
+          res.status(500).json({error: true, data: {message: err.message}});
         });
-      }
-  );
+      });
 };
