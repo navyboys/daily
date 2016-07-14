@@ -7,8 +7,8 @@ todo_router.route('/todos').get(TodoController.getTodos);
 // Add a new todo
 todo_router.route('/todos').post(TodoController.addTodo);
 
-// // Delete a post by cuid
-// router.route('/posts/:cuid').delete(PostController.deletePost);
+// Delete a todo
+todo_router.route('/todos/:id').delete(TodoController.deleteTodo);
 
 // export default router;
 module.exports = todo_router;
