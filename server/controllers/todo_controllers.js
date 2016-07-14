@@ -55,11 +55,11 @@ module.exports.deleteTodo = function(req, res){
       .fetch()
       .then((todo) => {
         todo.destroy()
-        .then(function () {
-          res.json({error: false, data: {message: 'Todo successfully deleted'}});
-        })
-        .catch(function (err) {
-          res.status(500).json({error: true, data: {message: err.message}});
-        });
+            .then(function () {
+              res.json({error: false, data: {message: 'Todo successfully deleted'}});
+            })
+            .catch(function (err) {
+              res.status(500).json({error: true, data: {message: err.message}});
+            });
       });
 };
