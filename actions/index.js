@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes'
 
+//action creators
 export function addTodo(text) {
   return { type: types.ADD_TODO, text }
 }

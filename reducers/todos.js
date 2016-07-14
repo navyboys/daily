@@ -1,12 +1,22 @@
 import { ADD_TODO, DELETE_TODO, EDIT_TODO, COMPLETE_TODO, COMPLETE_ALL, CLEAR_COMPLETED } from '../constants/ActionTypes'
 
-const initialState = [
+var tasks = [
   {
-    text: 'Use Redux',
+    text: "Implement login",
     completed: false,
     id: 0
+  },
+  {
+    text: "Implement webchat via sockets",
+    completed: false,
+    id: 1
+  },
+  {
+    text: "Implement mocha tests? ",
+    id: 2
   }
 ]
+const initialState = tasks;
 
 export default function todos(state = initialState, action) {
   switch (action.type) {
@@ -16,7 +26,7 @@ export default function todos(state = initialState, action) {
           id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
           completed: false,
           text: action.text
-        }, 
+        },
         ...state
       ]
 

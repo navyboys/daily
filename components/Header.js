@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import TodoTextInput from './TodoTextInput'
+import ShowCalendarBtn from './ShowCalendarBtn'
 var moment = require('moment')
 
 var today = moment().format('dddd');
@@ -12,12 +13,15 @@ class Header extends Component {
 
   render() {
     return (
-      <header className="header">
-          <h1>{today}</h1>
-          <TodoTextInput newTodo
-                         onSave={this.handleSave.bind(this)}
-                         placeholder="Add a task..." />
-      </header>
+      <div>
+        <header className="header">
+            <h1>{today}</h1>
+            <TodoTextInput newTodo
+                           onSave={this.handleSave.bind(this)}
+                           placeholder="Add a task..." />
+        </header>
+        <ShowCalendarBtn />
+      </div>
     )
   }
 }
