@@ -7,6 +7,7 @@
 - login with github account
 - integrate github issues
 - show past days
+- draggable (persist?)
 - tagging
 - integrate nike+ events
 - backlog
