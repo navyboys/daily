@@ -1,6 +1,6 @@
 # References
 
-##### Chart Tools
+### Chart Tools
 
 - [12 Best Charting Libraries for Web Developers](http://blog.udacity.com/2016/03/12-best-charting-libraries-for-web-developers.html)
 - [Fusion Charts](http://www.fusioncharts.com/react-charts/#/demos/ex8)
