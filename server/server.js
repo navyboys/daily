@@ -24,26 +24,6 @@ app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
-// app.get("/", function(req, res) {
-//   res.sendFile(path.resolve(__dirname, '../public/index.html'))
-// })
-
-// app.post('/api/todos', function (req, res) {
-//   var newTodo = req.body;
-//
-//   newTodo.status = 'open';
-//   newTodo.due = strftime('%F', new Date());
-//
-//   res.json(newTodo);
-//
-//   // newTodo.save((err, saved) => {
-//   //   if (err) {
-//   //     res.status(500).send(err);
-//   //   }
-//   //   res.json(saved);
-//   // });
-// });
-
 app.listen(port, function(error) {
   if (error) {
     console.error(error);
