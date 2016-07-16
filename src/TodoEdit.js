@@ -4,10 +4,13 @@ var $ = require('jquery');
 var Link = require('react-router').Link;
 
 var Panel = require('react-bootstrap/lib/Panel');
-var Input = require('react-bootstrap/lib/Input');
+// var Input = require('react-bootstrap/lib/Input');
 var Button  = require('react-bootstrap/lib/Button');
 var ButtonToolbar = require('react-bootstrap/lib/ButtonToolbar');
 var Alert = require('react-bootstrap/lib/Alert');
+var FormGroup = require('react-bootstrap/lib/FormGroup');
+var ControlLabel = require('react-bootstrap/lib/ControlLabel');
+var FormControl = require('react-bootstrap/lib/FormControl');
 
 var TodoEdit = React.createClass({
   render: function() {

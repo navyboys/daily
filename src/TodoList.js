@@ -37,7 +37,7 @@ var TodoRow = React.createClass({
 
 var TodoTable = React.createClass({
   render: function() {
-    //console.log("Rendering todo table, num items:", this.props.todos.length);
+    console.log("Rendering todo table, num items:", this.props.todos.length);
     var todoRows = this.props.todos.map(function(todo) {
       return <TodoRow key={todo.id} todo={todo} />
     });
@@ -75,8 +75,12 @@ var TodoList = React.createClass({
   },
 
   componentDidUpdate: function(prevProps) {
+    console.log("prevProps "+prevProps.todos);
+    console.log("nowProps "+this.props.todos);
     var oldQuery = prevProps.location.query;
     var newQuery = this.props.location.query;
+    console.log("old "+this.state.todos.length);
+    console.log("new "+this.props.length);
     if (oldQuery.priority === newQuery.priority &&
         oldQuery.status === newQuery.status) {
       console.log("TodoList: componentDidUpdate, no change in filter, not updating");
@@ -85,6 +89,8 @@ var TodoList = React.createClass({
       console.log("TodoList: componentDidUpdate, loading data with new filter");
       this.loadData();
     }
+
+
   },
 
   loadData: function() {
@@ -112,12 +118,17 @@ var TodoList = React.createClass({
         // We're advised not to modify the state, it's immutable. So, make a copy.
         var todosModified = this.state.todos.concat(todo);
         this.setState({todos: todosModified});
+        console.log("check this"+todosModified);
+        console.log("called force");
+        this.loadData();
       }.bind(this),
       error: function(xhr, status, err) {
         // ideally, show error to user.
         console.log("Error adding todo:", err);
       }
     });
+
+
   }
 });
 

@@ -21,6 +21,7 @@ var TodoAdd = React.createClass({
                 placeholder="Enter new task"
                 onChange={this.handleChange}
               />
+              <FormControl.Feedback />
               <Button type='submit' bsStyle='primary' label="Add new task" bsStyle="primary" onClick={this.handleSubmit}>Add new task
               </Button>
             </form>
@@ -34,6 +35,7 @@ var TodoAdd = React.createClass({
     // var form = document.forms.todoAdd;
     var form = document.getElementById("formBasicText");
     console.log("in handleSubmit function "+form.value);
+    if (form.value==="") return;
     // debugger;
     this.props.addTodo({title: form.value, status: 'New', user_id: '1'});
     // clear the form for the next input
