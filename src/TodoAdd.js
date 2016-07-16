@@ -2,30 +2,42 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var Panel = require('react-bootstrap/lib/Panel');
-var Input = require('react-bootstrap/lib/Input');
+// var Input = require('react-bootstrap/lib/Input');
 var Button = require('react-bootstrap/lib/Button');
+var FormGroup = require('react-bootstrap/lib/FormGroup');
+var ControlLabel = require('react-bootstrap/lib/ControlLabel');
+var FormControl = require('react-bootstrap/lib/FormControl');
 
 var TodoAdd = React.createClass({
   render: function() {
     console.log("Rendering TodoAdd");
     return (
       <Panel header=" ">
-        <form name="todoAdd">
-          <Input type="text" name="title" label="What needs to be done?" />
-          <Button type='submit' label="Add new task" bsStyle="primary" onClick={this.handleSubmit} />
-        </form>
+        <FormGroup controlId="formBasicText">
+            <form name="todoAdd">
+              <FormControl
+                name="todoAdd"
+                type="text"
+                placeholder="Enter new task"
+                onChange={this.handleChange}
+              />
+              <Button type='submit' bsStyle='primary' label="Add new task" bsStyle="primary" onClick={this.handleSubmit}>Add new task
+              </Button>
+            </form>
+        </FormGroup>
       </Panel>
     )
   },
 
   handleSubmit: function(e) {
     e.preventDefault();
-    var form = document.forms.todoAdd;
-    console.log("in handleSubmit function "+form.title.value);
+    // var form = document.forms.todoAdd;
+    var form = document.getElementById("formBasicText");
+    console.log("in handleSubmit function "+form.value);
     // debugger;
-    this.props.addTodo({title: form.title.value, status: 'New', user_id: '1'});
+    this.props.addTodo({title: form.value, status: 'New', user_id: '1'});
     // clear the form for the next input
-    form.title.value = "";
+    form.value = "";
   }
 });
 
