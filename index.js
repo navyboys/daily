@@ -22,7 +22,6 @@ render(
       <Router history={browserHistory}>
         <Route path='/' component={ App } />
         <Route path='/about' component={ About } />
-
       </Router>
     </Provider>
    ),
