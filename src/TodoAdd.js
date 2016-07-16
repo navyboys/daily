@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 
 var Panel = require('react-bootstrap/lib/Panel');
 var Input = require('react-bootstrap/lib/Input');
-var ButtonInput = require('react-bootstrap/lib/ButtonInput');
+var Button = require('react-bootstrap/lib/Button');
 
 var TodoAdd = React.createClass({
   render: function() {
@@ -12,7 +12,7 @@ var TodoAdd = React.createClass({
       <Panel header=" ">
         <form name="todoAdd">
           <Input type="text" name="title" label="What needs to be done?" />
-          <ButtonInput value="Add new task" bsStyle="primary" onClick={this.handleSubmit} />
+          <Button type='submit' label="Add new task" bsStyle="primary" onClick={this.handleSubmit} />
         </form>
       </Panel>
     )
