@@ -21,7 +21,8 @@ var TodoAdd = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var form = document.forms.todoAdd;
-    this.props.addTodo({owner: form.owner.value, title: form.title.value, status: 'New', priority: 'P1'});
+    console.log(this.props.todo);
+    this.props.addTodo({title: form.title.value, status: 'New', priority: 'P1'});
     // clear the form for the next input
     form.owner.value = ""; form.title.value = "";
   }

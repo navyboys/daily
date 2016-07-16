@@ -43,7 +43,9 @@ var TodoTable = React.createClass({
     });
     return (
       <table className="table table-striped table-bordered table-condensed">
+        <tbody>
           {todoRows}
+        </tbody>
       </table>
     )
   }
