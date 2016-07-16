@@ -7,7 +7,7 @@ var ButtonInput = require('react-bootstrap/lib/ButtonInput');
 
 var TodoAdd = React.createClass({
   render: function() {
-    //console.log("Rendering TodoAdd");
+    console.log("Rendering TodoAdd");
     return (
       <Panel header=" ">
         <form name="todoAdd">
@@ -21,10 +21,11 @@ var TodoAdd = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var form = document.forms.todoAdd;
-    console.log(this.props.todo);
-    this.props.addTodo({title: form.title.value, status: 'New', priority: 'P1'});
+    console.log("in handleSubmit function "+form.title.value);
+    // debugger;
+    this.props.addTodo({title: form.title.value, status: 'New', user_id: '1'});
     // clear the form for the next input
-    form.owner.value = ""; form.title.value = "";
+    form.title.value = "";
   }
 });
 

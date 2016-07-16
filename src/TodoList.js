@@ -91,7 +91,7 @@ var TodoList = React.createClass({
     var query = this.props.location.query || {};
     var filter = {priority: query.priority, status: query.status};
 
-    $.ajax('/api/todos/?user_id=1&date=2016-07-14', {data: filter}).done(function(data) {
+    $.ajax('/api/todos/?user_id=1&date=2016-07-16', {data: filter}).done(function(data) {
       this.setState({todos: data["data"]});
     }.bind(this));
     // In production, we'd also handle errors.
@@ -108,6 +108,7 @@ var TodoList = React.createClass({
       data: JSON.stringify(todo),
       success: function(data) {
         var todo = data;
+        // debugger;
         // We're advised not to modify the state, it's immutable. So, make a copy.
         var todosModified = this.state.todos.concat(todo);
         this.setState({todos: todosModified});
