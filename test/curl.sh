@@ -1,5 +1,5 @@
 # getTodos
-curl -v http://localhost:3000/api/todos?user_id=1&date='2016-07-13'
+curl -v http://localhost:3000/api/todos?user_id=1&date='2016-07-15'
 
 # addTodo
 curl -v \
@@ -10,7 +10,7 @@ curl -v \
 # updateTodo
 curl -X "PUT" \
   --header 'Content-Type: application/json' \
-  --data '{"status":"completed","title":"Changed! Run 10K"}' \
+  --data '{"status":"completed","due":"2016-07-14}' \
   http://localhost:3000/api/todos/6
 
 # deleteTodo
