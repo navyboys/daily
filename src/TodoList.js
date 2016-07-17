@@ -29,6 +29,18 @@ var TodoRow = React.createClass({
     $currentTodo.value=window.prompt("Update the task");
     this.updateTodo({title: $currentTodo.value, status: this.props.todo.status});
   },
+  handleStatusChange: function(){
+    var $todoId=$('.'+this.props.todo.id);
+    var todoTitle=this.props.todo.title;
+    $todoId.toggleClass("completed");
+    if ($todoId.hasClass("completed")) {
+      console.log("will fire update to mark closed");
+      this.updateTodo({title: todoTitle, status:"closed" });
+    } else {
+      console.log("will fire update to mark open");
+      this.updateTodo({title: todoTitle, status:"open" });
+    }
+  },
   updateTodo: function(todo) {
     console.log("Updating todo");
     $.ajax({
@@ -64,8 +76,7 @@ var TodoRow = React.createClass({
           <button type="button" className="destroy" onClick={this.handleDelete}>
             <span className="glyphicon glyphicon-remove" aria-hidden="false"></span>
           </button>
-          <button type="button" className="markComplete" onClick={() =>
-                  $('.'+this.props.todo.id).toggleClass("completed") }>
+          <button type="button" className="markComplete" onClick={this.handleStatusChange}>
             <span className="glyphicon glyphicon-ok" aria-hidden="false"></span>
           </button>
           <button type="button" className="editTodo" onClick={this.handleChange}>
@@ -80,7 +91,6 @@ var TodoRow = React.createClass({
                   name="todoAdd"
                   type="text"
                   value={this.props.todo.title}
-
                 />
                 <FormControl.Feedback />
               </form>
