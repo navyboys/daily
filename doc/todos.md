@@ -8,9 +8,9 @@
 - (ben) integrate github issues
 - show past days
 - draggable (persist?)
+- backlog
 - tagging
 - integrate nike+ events
-- backlog
 
 ## bugs
 

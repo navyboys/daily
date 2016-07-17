@@ -57,7 +57,7 @@ var IssueList = React.createClass({
   },
 
   loadData: function() {
-    $.ajax('http://api.github.com/issues?access_token=b7ed590823e029be3fd3233123cf138171a48075').done(function(data) {
+    $.ajax('http://api.github.com/issues?access_token=5ab8787034d275fa66e6f1a45bb7dc33850d34bb').done(function(data) {
       this.setState({issues: data});
     }.bind(this));
   }
