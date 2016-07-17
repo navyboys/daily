@@ -508,7 +508,16 @@ label[for='toggle-all'] {
  .submitTaskBtn {
 	 display: none
  }
-
+.filterOpenBtn {
+	position: center;
+	margin-left: 160px;
+	bottom: 0px;
+}
+.filterCloseBtn{
+	position: center;
+	left: 400px;
+	bottom: 0px;
+}
 .destroy {
   position: relative;
 	top: 0px;

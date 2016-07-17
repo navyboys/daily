@@ -15,6 +15,8 @@ import ShowCalendarBtn from './ShowCalendarBtn'
 var TodoFilter = require('./TodoFilter');
 var TodoAdd = require('./TodoAdd');
 
+var openFilterGlobal;
+
 var TodoRow = React.createClass({
   handleDelete: function(e) {
     $('.'+this.props.todo.id).toggleClass("removed");
@@ -66,7 +68,6 @@ var TodoRow = React.createClass({
         console.log("Error adding todo:", err);
       }
     });
-    console.log("called forceUpdate");
   },
   //
   render: function() {
@@ -100,18 +101,27 @@ var TodoRow = React.createClass({
       </tr>
     )
   }
-// onChange={this.handleChange}
 });
-// <input id={this.props.todo.id} className={this.props.todo.id} type="text" value={this.props.todo.title} contentEditable="true"></input>
-// controlId="formBasicText"
+
 var TodoTable = React.createClass({
   render: function() {
+    var filter = openFilterGlobal;
     console.log("Rendering todo table, num items:", this.props.todos.length);
     var todoRows = this.props.todos.map(function(todo) {
-      if (todo.status!="closed") {
-        return <TodoRow key={todo.id} todo={todo}/>
+      switch ( filter ) {
+        case "closed":
+          if (todo.status==="closed") {
+            return <TodoRow key={todo.id} todo={todo}/>
+          }
+          break;
+        case "open":
+          if (todo.status==="open") {
+            return <TodoRow key={todo.id} todo={todo}/>
+          }
+          break;
+        default:
+          return <TodoRow key={todo.id} todo={todo}/>
       }
-
     });
     return (
       <table className="table table-striped table-bordered table-condensed">
@@ -136,7 +146,8 @@ var TodoList = React.createClass({
           <ShowCalendarBtn />
           <TodoTable todos={this.state.todos}/>
           <TodoAdd addTodo={this.addTodo} />
-          <TodoFilter submitHandler={this.changeFilter} initFilter={this.props.location.query}/>
+          <TodoFilter openFilter={this.openFilter}
+            closeFilter={this.closeFilter} submitHandler={this.changeFilter} initFilter={this.props.location.query}/>
         </div>
     )
   },
@@ -163,11 +174,18 @@ var TodoList = React.createClass({
     }
   },
 
-  loadData: function() {
+  loadData: function(status="open") {
+    console.log("the test "+status);
     var today = strftime('%F', new Date());
-    var query = this.props.location.query || {};
-    var filter = {priority: query.priority, status: query.status};
-    $.ajax('/api/todos/?user_id=1&date='+today, {data: filter}).done(function(data) {
+    var user_id=1;
+    var todoStatus = status;
+    if (status==="open") {
+      openFilterGlobal = status;
+    } else if (status==="closed") {
+      openFilterGlobal = status;
+    }
+    console.log("openFilterGlobal "+openFilterGlobal);
+    $.ajax('/api/todos/?user_id='+user_id+'&date='+today+'&status='+todoStatus).done(function(data) {
       this.setState({todos: data["data"]});
     }.bind(this));
   },
@@ -175,6 +193,15 @@ var TodoList = React.createClass({
   changeFilter: function(newFilter) {
     this.props.history.push({search: '?' + $.param(newFilter)});
   },
+  openFilter: function(todo) {
+    console.log("ok, this is Openprogress");
+    this.loadData("open");
+  },
+  closeFilter: function(todo) {
+    console.log("ok, this is Closeprogress");
+    this.loadData("closed");
+  },
+
 
   addTodo: function(todo) {
     console.log("Adding todo:", todo);
@@ -187,7 +214,6 @@ var TodoList = React.createClass({
         var todosModified = this.state.todos.concat(todo);
         this.setState({todos: todosModified});
         console.log("check this"+todosModified);
-        console.log("called force");
         this.loadData();
       }.bind(this),
       error: function(xhr, status, err) {

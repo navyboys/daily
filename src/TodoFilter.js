@@ -7,41 +7,30 @@ var Row = require('react-bootstrap/lib/Row');
 var Col = require('react-bootstrap/lib/Col');
 var Input = require('react-bootstrap/lib/Input');
 var ButtonInput = require('react-bootstrap/lib/ButtonInput');
+var Button = require('react-bootstrap/lib/Button');
 
 var TodoFilter = React.createClass({
   render: function() {
     console.log("Rendering TodoFilter, state=", this.state);
     return (
-      <Panel collapsible defaultExpanded={true} header="Filter">
-        <Grid fluid={true}>
-          <Row>
-            <Col xs={12} sm={6} md={4}>
-              <Input type="select" label="Priority" value={this.state.priority}
-                onChange={this.onChangePriority}>
-                <option value="">(Any)</option>
-                <option value="P1">P1</option>
-                <option value="P2">P2</option>
-                <option value="P3">P3</option>
-              </Input>
-            </Col>
-            <Col xs={12} sm={6} md={4}>
-              <Input type="select" label="Status" value={this.state.status}
-                onChange={this.onChangeStatus}>
-                <option value="">(Any)</option>
-                <option>New</option>
-                <option>Open</option>
-                <option>Closed</option>
-              </Input>
-            </Col>
-            <Col xs={12} sm={6} md={4}>
-              <Input label="&nbsp;">
-                <ButtonInput value="Search" bsStyle="primary" onClick={this.submit} />
-              </Input>
-            </Col>
-          </Row>
-        </Grid>
-      </Panel>
+      <div>
+        <Panel>
+        <Button type='button' bsStyle='danger' label="Open tasks" className='filterOpenBtn' onClick={this.openFilter}>Open tasks</Button>
+        <Button type='button' bsStyle='success' label="Closed tasks" className='filterCloseBtn' onClick={this.closeFilter}>Finished tasks</Button>
+        </Panel>
+      </div>
     )
+  },
+  openFilter: function(e){
+    e.preventDefault();
+    console.log("openFilter");
+    this.props.openFilter();
+
+  },
+  closeFilter: function(e){
+    e.preventDefault;
+    console.log("closeFilter");
+    this.props.closeFilter();
   },
 
   getInitialState: function() {
