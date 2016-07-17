@@ -18,7 +18,7 @@ var TodoRow = React.createClass({
     var form = document.getElementById("deleteBtn");
     this.deleteTodo({title: this.props.todo.id});
   },
-  handleChange: function() {
+  handleChange: function(e) {
     console.log("in changeHandler");
     console.log("title "+this.props.todo.title);
     // setState({title: e.target.value});
@@ -74,7 +74,8 @@ var TodoRow = React.createClass({
           <button type="button" className="editTodo" onClick={this.handleChange}>
             <span className="glyphicon glyphicon-pencil" aria-hidden="false"></span>
           </button>
-          <span className='table_cells'><input id={this.props.todo.id} className={this.props.todo.id} type="text" value={this.props.todo.title} contenteditable="true"></input></span>
+          <span className='table_cells'><input id={this.props.todo.id} className={this.props.todo.id} type="text" value={this.props.todo.title} contentEditable="true"></input></span>
+
         </td>
       </tr>
     )
