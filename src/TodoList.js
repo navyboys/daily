@@ -4,6 +4,9 @@ var $ = require('jquery');
 var Link = require('react-router').Link;
 var Button = require('react-bootstrap/lib/Button');
 var strftime = require('strftime');
+var FormGroup = require('react-bootstrap/lib/FormGroup');
+var ControlLabel = require('react-bootstrap/lib/ControlLabel');
+var FormControl = require('react-bootstrap/lib/FormControl');
 
 import CurrentDay from './CurrentDay'
 import Header from './Header'
@@ -19,14 +22,12 @@ var TodoRow = React.createClass({
     this.deleteTodo({title: this.props.todo.id});
   },
   handleChange: function(e) {
+    this.props.todo.title=e.target.value;
+    var $currentTodo=$("."+this.props.todo.id).children()[3].children[0].children[0].children[0];
     console.log("in changeHandler");
     console.log("title "+this.props.todo.title);
-    // setState({title: e.target.value});
-    console.log("after setstate");
-    $("."+this.props.todo.id).children("span").children("input")[0].value=window.prompt("Enter name");
-
-    // console.log("the new title "+title);
-    this.updateTodo({title: $("."+this.props.todo.id).children("span").children("input")[0].value, status: this.props.todo.status});
+    $currentTodo.value=window.prompt("Update the task");
+    this.updateTodo({title: $currentTodo.value, status: this.props.todo.status});
   },
   updateTodo: function(todo) {
     console.log("Updating todo");
@@ -40,7 +41,6 @@ var TodoRow = React.createClass({
         console.log("Error adding todo:", err);
       }
     });
-
   },
   deleteTodo: function(todo) {
     console.log("Deleting todo:", todo);
@@ -56,11 +56,8 @@ var TodoRow = React.createClass({
     });
     console.log("called forceUpdate");
   },
+  //
   render: function() {
-    //console.log("Rendering TodoRow:", this.props.todo);
-    // <td>
-    //   <Link to={'/todos/' + this.props.todo._id}>{this.props.todo._id}</Link>
-    // </td>
     return (
       <tr className='table_rows'>
         <td className={this.props.todo.id}>
@@ -74,14 +71,29 @@ var TodoRow = React.createClass({
           <button type="button" className="editTodo" onClick={this.handleChange}>
             <span className="glyphicon glyphicon-pencil" aria-hidden="false"></span>
           </button>
-          <span className='table_cells'><input id={this.props.todo.id} className={this.props.todo.id} type="text" value={this.props.todo.title} contentEditable="true"></input></span>
+          <span className='table_cells'><FormGroup >
+              <form name="todoItem">
+                <FormControl
+                  contentEditable="true"
+                  className={this.props.todo.id}
+                  id={this.props.todo.id}
+                  name="todoAdd"
+                  type="text"
+                  value={this.props.todo.title}
+
+                />
+                <FormControl.Feedback />
+              </form>
+          </FormGroup></span>
 
         </td>
       </tr>
     )
-  },
+  }
+// onChange={this.handleChange}
 });
-
+// <input id={this.props.todo.id} className={this.props.todo.id} type="text" value={this.props.todo.title} contentEditable="true"></input>
+// controlId="formBasicText"
 var TodoTable = React.createClass({
   render: function() {
     console.log("Rendering todo table, num items:", this.props.todos.length);

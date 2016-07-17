@@ -329,8 +329,9 @@ body {
   position: relative;;
   /*top: -50px;*/
   /*margin-right: 50px*/
-  right: -15px;
-  font-size: 30px
+  right: 0px;
+  font-size: 15px
+
 }
 
 .markComplete {
@@ -339,9 +340,9 @@ body {
 	left: 475px;
 	bottom: 0;
 	width: 30px;
-	height: 30px;
+	height: 20px;
 	margin-top: 0;
-	font-size: 20px;
+	font-size: 15px;
 	/*color: #cc9a9a;*/
   color: #90C5A9;
 	margin-bottom: 0px;
@@ -355,7 +356,7 @@ body {
 	width: 30px;
 	height: 30px;
 	margin-top: 0;
-	font-size: 20px;
+	font-size: 15px;
 	/*color: #cc9a9a;*/
   color: #90C5A9;
 	margin-bottom: 0px;
@@ -504,17 +505,19 @@ label[for='toggle-all'] {
 .removed {
   display: none
 }
-
+ .submitTaskBtn {
+	 display: none
+ }
 
 .destroy {
   position: relative;
 	top: 0px;
-	left: 15px;
+	left: 0px;
 	bottom: 0;
 	width: 30px;
 	height: 30px;
 	margin-top: 0;
-	font-size: 20px;
+	font-size: 15px;
 	/*color: #cc9a9a;*/
   color: #90C5A9;
 	margin-bottom: 0px;

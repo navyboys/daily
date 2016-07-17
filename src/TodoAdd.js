@@ -22,7 +22,7 @@ var TodoAdd = React.createClass({
                 onChange={this.handleChange}
               />
               <FormControl.Feedback />
-              <Button type='submit' bsStyle='primary' label="Add new task" bsStyle="primary" onClick={this.handleSubmit}>Add new task
+              <Button type='submit' bsStyle='primary' label="Add new task" bsStyle="primary" className='submitTaskBtn' onClick={this.handleSubmit}>Add new task
               </Button>
             </form>
         </FormGroup>
