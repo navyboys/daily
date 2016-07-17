@@ -328,7 +328,7 @@ body {
   position: relative;;
   /*top: -50px;*/
   /*margin-right: 50px*/
-  right: -80px;
+  right: -15px;
   font-size: 30px
 }
 
@@ -346,7 +346,20 @@ body {
 	margin-bottom: 0px;
 	transition: color 0.2s ease-out;
 }
-
+.editTodo {
+  position: relative;
+	top: 0px;
+	left: 400px;
+	bottom: 0;
+	width: 30px;
+	height: 30px;
+	margin-top: 0;
+	font-size: 20px;
+	/*color: #cc9a9a;*/
+  color: #90C5A9;
+	margin-bottom: 0px;
+	transition: color 0.2s ease-out;
+}
 .todoapp h1 {
 	position: absolute;
 	top: -153px;

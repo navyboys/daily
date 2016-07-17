@@ -14,10 +14,33 @@ var TodoAdd = require('./TodoAdd');
 
 var TodoRow = React.createClass({
   handleDelete: function(e) {
-
     $('.'+this.props.todo.id).toggleClass("removed");
     var form = document.getElementById("deleteBtn");
     this.deleteTodo({title: this.props.todo.id});
+  },
+  handleChange: function() {
+    console.log("in changeHandler");
+    console.log("title "+this.props.todo.title);
+    // setState({title: e.target.value});
+    console.log("after setstate");
+    $("."+this.props.todo.id).children("span").children("input")[0].value=window.prompt("Enter name");
+
+    // console.log("the new title "+title);
+    this.updateTodo({title: $("."+this.props.todo.id).children("span").children("input")[0].value, status: this.props.todo.status});
+  },
+  updateTodo: function(todo) {
+    console.log("Updating todo");
+    $.ajax({
+      type: 'PUT', url: '/api/todos/'+this.props.todo.id, contentType: 'application/json',
+      data: JSON.stringify(todo),
+      success: function(data) {
+      }.bind(this),
+      error: function(xhr, status, err) {
+        // ideally, show error to user.
+        console.log("Error adding todo:", err);
+      }
+    });
+
   },
   deleteTodo: function(todo) {
     console.log("Deleting todo:", todo);
@@ -48,7 +71,10 @@ var TodoRow = React.createClass({
                   $('.'+this.props.todo.id).toggleClass("completed") }>
             <span className="glyphicon glyphicon-ok" aria-hidden="false"></span>
           </button>
-          <span className='table_cells'>{this.props.todo.title}</span>
+          <button type="button" className="editTodo" onClick={this.handleChange}>
+            <span className="glyphicon glyphicon-pencil" aria-hidden="false"></span>
+          </button>
+          <span className='table_cells'><input id={this.props.todo.id} className={this.props.todo.id} type="text" value={this.props.todo.title} contenteditable="true"></input></span>
         </td>
       </tr>
     )
