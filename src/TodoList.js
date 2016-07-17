@@ -2,7 +2,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var Link = require('react-router').Link;
-// var moment = require('moment')
+var Button = require('react-bootstrap/lib/Button');
+var strftime = require('strftime');
 
 import CurrentDay from './CurrentDay'
 import Header from './Header'
@@ -12,6 +13,26 @@ var TodoFilter = require('./TodoFilter');
 var TodoAdd = require('./TodoAdd');
 
 var TodoRow = React.createClass({
+  handleDelete: function(e) {
+
+    $('.'+this.props.todo.id).toggleClass("removed");
+    var form = document.getElementById("deleteBtn");
+    this.deleteTodo({title: this.props.todo.id});
+  },
+  deleteTodo: function(todo) {
+    console.log("Deleting todo:", todo);
+    $.ajax({
+      type: 'DELETE', url: '/api/todos/'+this.props.todo.id, contentType: 'application/json',
+      data: JSON.stringify(todo),
+      success: function(data) {
+      }.bind(this),
+      error: function(xhr, status, err) {
+        // ideally, show error to user.
+        console.log("Error adding todo:", err);
+      }
+    });
+    console.log("called forceUpdate");
+  },
   render: function() {
     //console.log("Rendering TodoRow:", this.props.todo);
     // <td>
@@ -20,8 +41,7 @@ var TodoRow = React.createClass({
     return (
       <tr className='table_rows'>
         <td className={this.props.todo.id}>
-          <button type="button" className="destroy" onClick={() =>
-                $('.'+this.props.todo.id).toggleClass("removed") }>
+          <button type="button" className="destroy" onClick={this.handleDelete}>
             <span className="glyphicon glyphicon-remove" aria-hidden="false"></span>
           </button>
           <button type="button" className="markComplete" onClick={() =>
@@ -32,14 +52,14 @@ var TodoRow = React.createClass({
         </td>
       </tr>
     )
-  }
+  },
 });
 
 var TodoTable = React.createClass({
   render: function() {
     console.log("Rendering todo table, num items:", this.props.todos.length);
     var todoRows = this.props.todos.map(function(todo) {
-      return <TodoRow key={todo.id} todo={todo} />
+      return <TodoRow key={todo.id} todo={todo}/>
     });
     return (
       <table className="table table-striped table-bordered table-condensed">
@@ -89,15 +109,14 @@ var TodoList = React.createClass({
       console.log("TodoList: componentDidUpdate, loading data with new filter");
       this.loadData();
     }
-
-
   },
 
   loadData: function() {
+    console.log("in load data");
+    var today = strftime('%F', new Date());
     var query = this.props.location.query || {};
     var filter = {priority: query.priority, status: query.status};
-
-    $.ajax('/api/todos/?user_id=1&date=2016-07-16', {data: filter}).done(function(data) {
+    $.ajax('/api/todos/?user_id=1&date='+today, {data: filter}).done(function(data) {
       this.setState({todos: data["data"]});
     }.bind(this));
     // In production, we'd also handle errors.
@@ -114,7 +133,6 @@ var TodoList = React.createClass({
       data: JSON.stringify(todo),
       success: function(data) {
         var todo = data;
-        // debugger;
         // We're advised not to modify the state, it's immutable. So, make a copy.
         var todosModified = this.state.todos.concat(todo);
         this.setState({todos: todosModified});
@@ -127,9 +145,8 @@ var TodoList = React.createClass({
         console.log("Error adding todo:", err);
       }
     });
+  },
 
-
-  }
 });
 
 module.exports = TodoList;
