@@ -68,6 +68,9 @@ var TodoRow = React.createClass({
     });
     console.log("called forceUpdate");
   },
+  handleBlur: function() {
+    console.log("in blur");
+  },
   //
   render: function() {
     return (
@@ -91,6 +94,7 @@ var TodoRow = React.createClass({
                   name="todoAdd"
                   type="text"
                   value={this.props.todo.title}
+                  onBlur={this.handleBlur}
                 />
                 <FormControl.Feedback />
               </form>
@@ -108,7 +112,10 @@ var TodoTable = React.createClass({
   render: function() {
     console.log("Rendering todo table, num items:", this.props.todos.length);
     var todoRows = this.props.todos.map(function(todo) {
-      return <TodoRow key={todo.id} todo={todo}/>
+      if (todo.status!="closed") {
+        return <TodoRow key={todo.id} todo={todo}/>
+      }
+
     });
     return (
       <table className="table table-striped table-bordered table-condensed">
@@ -161,14 +168,12 @@ var TodoList = React.createClass({
   },
 
   loadData: function() {
-    console.log("in load data");
     var today = strftime('%F', new Date());
     var query = this.props.location.query || {};
     var filter = {priority: query.priority, status: query.status};
     $.ajax('/api/todos/?user_id=1&date='+today, {data: filter}).done(function(data) {
       this.setState({todos: data["data"]});
     }.bind(this));
-    // In production, we'd also handle errors.
   },
 
   changeFilter: function(newFilter) {
