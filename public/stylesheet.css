@@ -311,6 +311,7 @@ body {
   top: -27px;
   right: 15px;
 }
+
 .calendar {
   position: absolute;
   top: -35px;
@@ -328,8 +329,9 @@ body {
   position: relative;;
   /*top: -50px;*/
   /*margin-right: 50px*/
-  right: -80px;
-  font-size: 30px
+  right: 0px;
+  font-size: 15px
+
 }
 
 .markComplete {
@@ -338,15 +340,28 @@ body {
 	left: 475px;
 	bottom: 0;
 	width: 30px;
-	height: 30px;
+	height: 20px;
 	margin-top: 0;
-	font-size: 20px;
+	font-size: 15px;
 	/*color: #cc9a9a;*/
   color: #90C5A9;
 	margin-bottom: 0px;
 	transition: color 0.2s ease-out;
 }
-
+.editTodo {
+  position: relative;
+	top: 0px;
+	left: 400px;
+	bottom: 0;
+	width: 30px;
+	height: 30px;
+	margin-top: 0;
+	font-size: 15px;
+	/*color: #cc9a9a;*/
+  color: #90C5A9;
+	margin-bottom: 0px;
+	transition: color 0.2s ease-out;
+}
 .todoapp h1 {
 	position: absolute;
 	top: -153px;
@@ -490,17 +505,19 @@ label[for='toggle-all'] {
 .removed {
   display: none
 }
-
+ .submitTaskBtn {
+	 display: none
+ }
 
 .destroy {
   position: relative;
 	top: 0px;
-	left: 15px;
+	left: 0px;
 	bottom: 0;
 	width: 30px;
 	height: 30px;
 	margin-top: 0;
-	font-size: 20px;
+	font-size: 15px;
 	/*color: #cc9a9a;*/
   color: #90C5A9;
 	margin-bottom: 0px;
