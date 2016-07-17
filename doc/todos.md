@@ -4,20 +4,20 @@
 
 - (ben) charting for analysis
 - chat room with web socket
-- login with github account
-- integrate github issues
+- (ben) login with github account
+- (ben) integrate github issues
 - show past days
 - draggable (persist?)
+- backlog
 - tagging
 - integrate nike+ events
-- backlog
 
 ## bugs
 
 ## others
 
-- ui (non-reduxize)
 - deploy
+- domain
 - demo preparation: data
 - (both) demo preparation: speech & flow
 - test with chai
