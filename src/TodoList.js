@@ -83,7 +83,8 @@ var TodoRow = React.createClass({
           <button type="button" className="editTodo" onClick={this.handleChange}>
             <span className="glyphicon glyphicon-pencil" aria-hidden="false"></span>
           </button>
-          <span className='table_cells'><FormGroup >
+          <span className='table_cells'>
+            <FormGroup >
               <form name="todoItem">
                 <FormControl
                   contentEditable="true"
@@ -91,12 +92,11 @@ var TodoRow = React.createClass({
                   id={this.props.todo.id}
                   name="todoAdd"
                   type="text"
-                  value={this.props.todo.title}
-                />
+                  value={this.props.todo.title}/>
                 <FormControl.Feedback />
               </form>
-          </FormGroup></span>
-
+            </FormGroup>
+          </span>
         </td>
       </tr>
     )
@@ -125,7 +125,7 @@ var TodoTable = React.createClass({
     });
     return (
       <table className="table table-striped table-bordered table-condensed">
-        <tbody>
+        <tbody className="tBody">
           {todoRows}
         </tbody>
       </table>
@@ -178,14 +178,9 @@ var TodoList = React.createClass({
     console.log("the test "+status);
     var today = strftime('%F', new Date());
     var user_id=1;
-    var todoStatus = status;
-    if (status==="open") {
-      openFilterGlobal = status;
-    } else if (status==="closed") {
-      openFilterGlobal = status;
-    }
+    openFilterGlobal = status;
     console.log("openFilterGlobal "+openFilterGlobal);
-    $.ajax('/api/todos/?user_id='+user_id+'&date='+today+'&status='+todoStatus).done(function(data) {
+    $.ajax('/api/todos/?user_id='+user_id+'&date='+today+'&status='+openFilterGlobal).done(function(data) {
       this.setState({todos: data["data"]});
     }.bind(this));
   },
@@ -194,14 +189,14 @@ var TodoList = React.createClass({
     this.props.history.push({search: '?' + $.param(newFilter)});
   },
   openFilter: function(todo) {
-    console.log("ok, this is Openprogress");
+    $(".tBody").removeClass("completed");
     this.loadData("open");
   },
   closeFilter: function(todo) {
-    console.log("ok, this is Closeprogress");
+    $(".tBody").addClass("completed");
     this.loadData("closed");
-  },
 
+  },
 
   addTodo: function(todo) {
     console.log("Adding todo:", todo);

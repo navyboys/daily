@@ -23,6 +23,7 @@
 
 .form-control {
   color: #EF6D3B;
+
 }
 .rdtPicker {
 	display: none;
@@ -330,8 +331,7 @@ body {
   /*top: -50px;*/
   /*margin-right: 50px*/
   right: 0px;
-  font-size: 15px
-
+  font-size: 20px
 }
 
 .markComplete {
@@ -499,8 +499,9 @@ label[for='toggle-all'] {
 	text-decoration: line-through;
 }
 .completed {
-  color: #d9d9d9;
+	color: #d9d9d9;
   text-decoration: line-through;
+	transition: color 0.2s ease-out;
 }
 .removed {
   display: none
@@ -510,7 +511,7 @@ label[for='toggle-all'] {
  }
 .filterOpenBtn {
 	position: center;
-	margin-left: 160px;
+	margin-left: 150px;
 	bottom: 0px;
 }
 .filterCloseBtn{
