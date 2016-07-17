@@ -68,9 +68,6 @@ var TodoRow = React.createClass({
     });
     console.log("called forceUpdate");
   },
-  handleBlur: function() {
-    console.log("in blur");
-  },
   //
   render: function() {
     return (
@@ -94,7 +91,6 @@ var TodoRow = React.createClass({
                   name="todoAdd"
                   type="text"
                   value={this.props.todo.title}
-                  onBlur={this.handleBlur}
                 />
                 <FormControl.Feedback />
               </form>
