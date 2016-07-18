@@ -142,12 +142,13 @@ var TodoList = React.createClass({
     return (
       <div className='todoList'>
           <Header />
-          <CurrentDay />
+          <CurrentDay dateFilter={this.dateFilter} />
           <ShowCalendarBtn />
           <TodoTable todos={this.state.todos}/>
           <TodoAdd addTodo={this.addTodo} />
           <TodoFilter openFilter={this.openFilter}
-            closeFilter={this.closeFilter} submitHandler={this.changeFilter} initFilter={this.props.location.query}/>
+            closeFilter={this.closeFilter} submitHandler={this.changeFilter} initFilter={this.props.location.query}
+            allFilter={this.allFilter}/>
         </div>
     )
   },
@@ -174,20 +175,34 @@ var TodoList = React.createClass({
     }
   },
 
-  loadData: function(status="open") {
+  loadData: function(status="all", dateSelected="null") {
     console.log("the test "+status);
-    var today = strftime('%F', new Date());
+    if (dateSelected==="null") {
+      var today = strftime('%F', new Date());
+    } else {
+      var today=dateSelected;
+    }
     var user_id=1;
     openFilterGlobal = status;
     console.log("openFilterGlobal "+openFilterGlobal);
-    $.ajax('/api/todos/?user_id='+user_id+'&date='+today+'&status='+openFilterGlobal).done(function(data) {
+    $.ajax('/api/todos/?user_id='+user_id+'&date='+today).done(function(data) {
       this.setState({todos: data["data"]});
     }.bind(this));
+  },
+
+  dateFilter: function(dateSelected){
+    this.loadData("all",dateSelected);
   },
 
   changeFilter: function(newFilter) {
     this.props.history.push({search: '?' + $.param(newFilter)});
   },
+
+  allFilter: function(todo){
+    $(".tBody").removeClass("completed");
+    this.loadData("all");
+  },
+
   openFilter: function(todo) {
     $(".tBody").removeClass("completed");
     this.loadData("open");

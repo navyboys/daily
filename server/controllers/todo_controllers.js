@@ -6,7 +6,7 @@ module.exports.getTodos = function(req, res){
   var date = req.query.date;
   var status = req.query.status;
 
-  Todo.where({user_id: user_id, due: date, status: status})
+  Todo.where({user_id: user_id, due: date})
       .fetchAll()
       .then(function (collection) {
         res.json({error: false, data: collection.toJSON()});

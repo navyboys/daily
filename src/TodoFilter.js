@@ -15,21 +15,26 @@ var TodoFilter = React.createClass({
     return (
       <div>
         <Panel>
+        <Button type='button' bsStyle='primary' label="All tasks" className='filterAllBtn' onClick={this.allFilter}>All tasks</Button>
         <Button type='button' bsStyle='danger' label="Open tasks" className='filterOpenBtn' onClick={this.openFilter}>Open tasks</Button>
         <Button type='button' bsStyle='success' label="Closed tasks" className='filterCloseBtn' onClick={this.closeFilter}>Finished tasks</Button>
         </Panel>
       </div>
     )
   },
+
+  allFilter: function(e){
+    e.preventDefault();
+    this.props.allFilter();
+  },
+
   openFilter: function(e){
     e.preventDefault();
-    console.log("openFilter");
     this.props.openFilter();
 
   },
   closeFilter: function(e){
     e.preventDefault;
-    console.log("closeFilter");
     this.props.closeFilter();
   },
 
