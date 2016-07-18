@@ -30,7 +30,7 @@ $.getJSON('/token', function(data) {
 // Successfully connected!
 function clientConnected() {
     document.getElementById('invite-controls').style.display = 'block';
-    log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
+    // log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
 
     conversationsClient.on('invite', function (invite) {
         log('Incoming invite from: ' + invite.from);

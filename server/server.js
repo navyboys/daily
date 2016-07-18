@@ -68,7 +68,9 @@ app.get('/auth/github', passport.authenticate('github'));
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
     req.session.githubAccessToken = githubAccessToken;
-    res.redirect('/');
+    // res.redirect('/');
+    //redirect to SSL server for video chat to work
+    res.redirect('https://192.168.1.65:9000');
   }
 );
 
@@ -77,9 +79,12 @@ app.get('/logout', function(req, res){
   res.redirect('/home');
 });
 
+var globalIdentity;
 //for video chat
 app.get('/token', function(request, response) {
-    var identity = randomUsername();
+    var identity = randomUsername(globalIdentity);
+    globalIdentity = identity;
+    // var identity = "Rich";
 
     // Create an access token which we will sign and return to the client,
     // containing the grant we just created
