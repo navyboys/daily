@@ -37,17 +37,14 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
+var githubAccessToken = '';
 passport.use(new githubStrategy({
     clientID: '138ef0834313d69d7069',
     clientSecret: 'f6831300c2f47ced6a5e179ef7416f4c057147d2',
     callbackURL: "http://localhost:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log('accessToken: ' + accessToken);
-    console.log('id: ' + profile.id);
-    console.log('username: ' + profile.username);
-    console.log('profile_url: ' + profile.profileUrl);
-    console.log('email: ' + profile.emails[0].value);
+    githubAccessToken = accessToken;
     return done(null, profile);
   }
 ));
@@ -58,7 +55,7 @@ app.get('/auth/github', passport.authenticate('github'));
 // GitHub will call this URL
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
-    console.log('user.github_id after login' + req.user.id);
+    req.session.githubAccessToken = githubAccessToken;
     res.redirect('/');
   }
 );

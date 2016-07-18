@@ -2,11 +2,11 @@
 
 ## features
 
-- (ben) charting for analysis
-- chat room with web socket
-- (ben) login with github account
-- (ben) integrate github issues
-- show past days
+- (ben)  charting for analysis
+- (rich) chat room with web socket
+- (ben)  login with github account
+- (ben)  integrate github issues
+- (rich) show past days
 - draggable (persist?)
 - backlog
 - tagging
