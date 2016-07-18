@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary();
       table.string('github_id');
       table.string('email');
-      table.string('github_user_name');
+      table.string('github_username');
       table.string('github_access_token');
       table.string('github_profile_url');
       table.timestamps();

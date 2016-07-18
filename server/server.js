@@ -15,9 +15,11 @@ var compiler = webpack(webpack_config);
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpack_config.output.publicPath }));
 app.use(webpackHotMiddleware(compiler));
 
-var api_todo_router = require('./routes/todo_routes');
 app.use(bodyParser.json());
+var api_todo_router = require('./routes/todo_routes');
 app.use('/api', api_todo_router);
+var api_user_router = require('./routes/user_routes');
+app.use('/api', api_user_router);
 
 var passport = require('passport');
 var githubStrategy = require('passport-github').Strategy;
@@ -56,7 +58,6 @@ app.get('/auth/github', passport.authenticate('github'));
 // GitHub will call this URL
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
-    console.log('user after login' + JSON.stringify(req.user));
     console.log('user.github_id after login' + req.user.id);
     res.redirect('/');
   }
@@ -66,32 +67,6 @@ app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/home');
 });
-
-// var githubOAuth = require('github-oauth')({
-//   githubClient: '138ef0834313d69d7069',
-//   githubSecret: 'f6831300c2f47ced6a5e179ef7416f4c057147d2',
-//   baseURL: 'http://localhost',
-//   loginURI: '/login',
-//   callbackURI: 'http://localhost:3000/callback',
-//   scope: 'repo' // optional, default scope is set to user
-// });
-//
-// githubOAuth.on('error', function(err) {
-//   console.error('there was a login error', err);
-// });
-//
-// githubOAuth.on('token', function(token, serverResponse) {
-//   console.log('here is your shiny new github oauth token', token);
-//   serverResponse.end(JSON.stringify(token));
-// });
-//
-// app.get('/login', function(req, res) {
-//   githubOAuth.login(req, res);
-// });
-//
-// app.get('http://localhost:3000/callback', function(req, res) {
-//   githubOAuth.callback(req, res);
-// });
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.get('*', function (req, res) {
