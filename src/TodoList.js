@@ -15,6 +15,8 @@ import ShowCalendarBtn from './ShowCalendarBtn'
 var TodoFilter = require('./TodoFilter');
 var TodoAdd = require('./TodoAdd');
 
+var openFilterGlobal;
+
 var TodoRow = React.createClass({
   handleDelete: function(e) {
     $('.'+this.props.todo.id).toggleClass("removed");
@@ -66,7 +68,6 @@ var TodoRow = React.createClass({
         console.log("Error adding todo:", err);
       }
     });
-    console.log("called forceUpdate");
   },
   //
   render: function() {
@@ -82,7 +83,8 @@ var TodoRow = React.createClass({
           <button type="button" className="editTodo" onClick={this.handleChange}>
             <span className="glyphicon glyphicon-pencil" aria-hidden="false"></span>
           </button>
-          <span className='table_cells'><FormGroup >
+          <span className='table_cells'>
+            <FormGroup >
               <form name="todoItem">
                 <FormControl
                   contentEditable="true"
@@ -90,32 +92,40 @@ var TodoRow = React.createClass({
                   id={this.props.todo.id}
                   name="todoAdd"
                   type="text"
-                  value={this.props.todo.title}
-                />
+                  value={this.props.todo.title}/>
                 <FormControl.Feedback />
               </form>
-          </FormGroup></span>
-
+            </FormGroup>
+          </span>
         </td>
       </tr>
     )
   }
-// onChange={this.handleChange}
 });
-// <input id={this.props.todo.id} className={this.props.todo.id} type="text" value={this.props.todo.title} contentEditable="true"></input>
-// controlId="formBasicText"
+
 var TodoTable = React.createClass({
   render: function() {
+    var filter = openFilterGlobal;
     console.log("Rendering todo table, num items:", this.props.todos.length);
     var todoRows = this.props.todos.map(function(todo) {
-      if (todo.status!="closed") {
-        return <TodoRow key={todo.id} todo={todo}/>
+      switch ( filter ) {
+        case "closed":
+          if (todo.status==="closed") {
+            return <TodoRow key={todo.id} todo={todo}/>
+          }
+          break;
+        case "open":
+          if (todo.status==="open") {
+            return <TodoRow key={todo.id} todo={todo}/>
+          }
+          break;
+        default:
+          return <TodoRow key={todo.id} todo={todo}/>
       }
-
     });
     return (
       <table className="table table-striped table-bordered table-condensed">
-        <tbody>
+        <tbody className="tBody">
           {todoRows}
         </tbody>
       </table>
@@ -132,11 +142,13 @@ var TodoList = React.createClass({
     return (
       <div className='todoList'>
           <Header />
-          <CurrentDay />
+          <CurrentDay dateFilter={this.dateFilter} />
           <ShowCalendarBtn />
           <TodoTable todos={this.state.todos}/>
           <TodoAdd addTodo={this.addTodo} />
-          <TodoFilter submitHandler={this.changeFilter} initFilter={this.props.location.query}/>
+          <TodoFilter openFilter={this.openFilter}
+            closeFilter={this.closeFilter} submitHandler={this.changeFilter} initFilter={this.props.location.query}
+            allFilter={this.allFilter}/>
         </div>
     )
   },
@@ -163,17 +175,42 @@ var TodoList = React.createClass({
     }
   },
 
-  loadData: function() {
-    var today = strftime('%F', new Date());
-    var query = this.props.location.query || {};
-    var filter = {priority: query.priority, status: query.status};
-    $.ajax('/api/todos/?user_id=1&date='+today, {data: filter}).done(function(data) {
+  loadData: function(status="all", dateSelected="null") {
+    console.log("the test "+status);
+    if (dateSelected==="null") {
+      var today = strftime('%F', new Date());
+    } else {
+      var today=dateSelected;
+    }
+    var user_id=1;
+    openFilterGlobal = status;
+    console.log("openFilterGlobal "+openFilterGlobal);
+    $.ajax('/api/todos/?user_id='+user_id+'&date='+today).done(function(data) {
       this.setState({todos: data["data"]});
     }.bind(this));
   },
 
+  dateFilter: function(dateSelected){
+    this.loadData("all",dateSelected);
+  },
+
   changeFilter: function(newFilter) {
     this.props.history.push({search: '?' + $.param(newFilter)});
+  },
+
+  allFilter: function(todo){
+    $(".tBody").removeClass("completed");
+    this.loadData("all");
+  },
+
+  openFilter: function(todo) {
+    $(".tBody").removeClass("completed");
+    this.loadData("open");
+  },
+  closeFilter: function(todo) {
+    $(".tBody").addClass("completed");
+    this.loadData("closed");
+
   },
 
   addTodo: function(todo) {
@@ -187,7 +224,6 @@ var TodoList = React.createClass({
         var todosModified = this.state.todos.concat(todo);
         this.setState({todos: todosModified});
         console.log("check this"+todosModified);
-        console.log("called force");
         this.loadData();
       }.bind(this),
       error: function(xhr, status, err) {

@@ -7,6 +7,9 @@ var Home = React.createClass({
   render: function() {
     return (
       <div id='github-login-btn'>
+        <div>
+          <img src='hero.png' width="550" height="600"></img>
+        </div>
         <form onSubmit={this.handleSubmit}>
           <a type='submit' className="btn btn-block btn-social btn-github"
              href='auth/github'>
@@ -14,7 +17,9 @@ var Home = React.createClass({
             Login with Github
           </a>
         </form>
+
       </div>
+
     )
   }
 });
