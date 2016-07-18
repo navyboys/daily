@@ -22,20 +22,16 @@ app.use('/api', api_todo_router);
 var passport = require('passport');
 var githubStrategy = require('passport-github').Strategy;
 var session = require('express-session');
-app.use(session({secret: "-- ENTER CUSTOM SESSION SECRET --"}));
+app.use(require('cookie-parser')());
+app.use(session({ secret: 'daily', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 passport.serializeUser(function(user, done) {
-  // placeholder for custom user serialization
-  // null is for errors
   done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
-  // placeholder for custom user deserialization.
-  // maybe you are going to get the user from mongo by id?
-  // null is for errors
   done(null, user);
 });
 
@@ -46,7 +42,10 @@ passport.use(new githubStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     console.log('accessToken: ' + accessToken);
-    console.log('profile: ' + profile);
+    console.log('id: ' + profile.id);
+    console.log('username: ' + profile.username);
+    console.log('profile_url: ' + profile.profileUrl);
+    console.log('email: ' + profile.emails[0].value);
     return done(null, profile);
   }
 ));
@@ -57,13 +56,15 @@ app.get('/auth/github', passport.authenticate('github'));
 // GitHub will call this URL
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
+    console.log('user after login' + JSON.stringify(req.user));
+    console.log('user.github_id after login' + req.user.id);
     res.redirect('/');
   }
 );
 
 app.get('/logout', function(req, res){
   req.logout();
-  res.redirect('/');
+  res.redirect('/home');
 });
 
 // var githubOAuth = require('github-oauth')({

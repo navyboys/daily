@@ -24,6 +24,7 @@
     "bookshelf": "^0.10.0",
     "classnames": "^2.1.2",
     "compression": "^1.6.1",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "express-session": "^1.14.0",
     "if-env": "^1.0.0",

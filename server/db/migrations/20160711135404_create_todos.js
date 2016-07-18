@@ -2,9 +2,11 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTableIfNotExists('users', function(table) {
       table.increments('id').primary();
+      table.string('github_id');
       table.string('email');
       table.string('github_user_name');
-      table.string('github_token');
+      table.string('github_access_token');
+      table.string('github_profile_url');
       table.timestamps();
     }).createTableIfNotExists('todos', function(table) {
       table.increments('id').primary();
