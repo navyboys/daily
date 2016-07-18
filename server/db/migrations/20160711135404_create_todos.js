@@ -2,9 +2,9 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTableIfNotExists('users', function(table) {
       table.increments('id').primary();
-      table.string('name');
       table.string('email');
-      table.string('time_zone');
+      table.string('github_user_name');
+      table.string('github_token');
       table.timestamps();
     }).createTableIfNotExists('todos', function(table) {
       table.increments('id').primary();
