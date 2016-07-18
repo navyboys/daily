@@ -34,9 +34,11 @@ ReactDOM.render(
       <Redirect from="/" to="/todos" />
       <Route path='/about' component={ About } />
       <Route path='/home' component={ Home } />
-      <Route path='/chat' component={ VideoChat } />
+
       <Route path="*" component={NoMatch} />
     </Router>
   ),
   document.getElementById('main')
 );
+
+// <Route path='/chat' component={ VideoChat } />
