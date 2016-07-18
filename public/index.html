@@ -5,6 +5,8 @@
       type="image/png"
       href="http://localhost:3000/favicon.png">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- For video chat -->
+    <link rel="stylesheet" href="https://media.twiliocdn.com/sdk/quickstart/conversations-quickstart.min.css">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
@@ -24,6 +26,22 @@
   <body>
     <div class="todoapp" id="main">
     </div>
+    <div id="controls">
+      <div id="preview">
+        <div id="local-conversation"></div>
+      </div>
+      <div id="invite-controls">
+        <p class="instructions">Connect to:</p>
+        <input id="invite-to" type="text" placeholder="Who do you want to chat with?" />
+        <button id="button-invite">Connect!</button>
+      </div>
+      <div id="log">
+        <p>&gt;&nbsp;<span id="log-content">Preparing to listen</span>...</p>
+      </div>
+    </div>
+    <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
+    <script src="https://media.twiliocdn.com/sdk/js/conversations/v0.13/twilio-conversations.min.js"></script>
+    <script src="/bundle.js"></script>
     <script src="/static/bundle.js"></script>
   </body>
 </html>

@@ -2,9 +2,21 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var strftime = require('strftime');
+require('dotenv').load();
+var AccessToken = require('twilio').AccessToken;
+var ConversationsGrant = AccessToken.ConversationsGrant;
+var randomUsername = require('../randos');
+var fs = require('fs');
+var https = require('https');
+var privateKey  = fs.readFileSync('certs/key.pem', 'utf8');
+var certificate = fs.readFileSync('certs/cert.pem', 'utf8');
+
+var credentials = {key: privateKey, cert: certificate};
 
 var app = express();
 var port = 3000;
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(9000);
 
 var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
@@ -64,6 +76,34 @@ app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/home');
 });
+
+//for video chat
+app.get('/token', function(request, response) {
+    var identity = randomUsername();
+
+    // Create an access token which we will sign and return to the client,
+    // containing the grant we just created
+    var token = new AccessToken(
+        process.env.TWILIO_ACCOUNT_SID,
+        process.env.TWILIO_API_KEY,
+        process.env.TWILIO_API_SECRET
+    );
+
+    // Assign the generated identity to the token
+    token.identity = identity;
+
+    //grant the access token Twilio Video capabilities
+    var grant = new ConversationsGrant();
+    grant.configurationProfileSid = process.env.TWILIO_CONFIGURATION_SID;
+    token.addGrant(grant);
+
+    // Serialize the token to a JWT string and include it in a JSON response
+    response.send({
+        identity: identity,
+        token: token.toJwt()
+    });
+});
+
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.get('*', function (req, res) {

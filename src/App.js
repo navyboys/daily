@@ -3,16 +3,17 @@ import React from 'react'
 import 'babel-polyfill'
 // import { render } from 'react-dom'
 
-var ReactDOM = require('react-dom');
-// var Router = require('react-router').Router;
-// var Route = require('react-router').Route;
+// var ReactDOM = require('react-dom');
+import ReactDOM from 'react-dom';
 var Redirect = require('react-router').Redirect;
+
 
 import { Router, Route, browserHistory } from 'react-router';
 import Home from './Home';
 import About from './About';
 import Header from './Header';
 
+var VideoChat = require('./VideoChat');
 var TodoList = require('./TodoList');
 var TodoEdit = require('./TodoEdit');
 
@@ -33,6 +34,7 @@ ReactDOM.render(
       <Redirect from="/" to="/todos" />
       <Route path='/about' component={ About } />
       <Route path='/home' component={ Home } />
+      <Route path='/chat' component={ VideoChat } />
       <Route path="*" component={NoMatch} />
     </Router>
   ),

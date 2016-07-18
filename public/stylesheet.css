@@ -15,7 +15,21 @@
   position: relative;
 
 }*/
-
+/*.media-container, .media-container > video {
+  position: absolute;
+  right: 40px;
+  max-width: 270px;
+}*/
+.remote-media-container > video {
+  position: absolute;
+  right: 40px;
+  max-width: 270px;
+}
+.local-media-container > video{
+  position: absolute;
+  right: 300px;
+  max-width: 270px;
+}
 #login-btn {
   background-color: #3F2860;
   padding-bottom: : 20px;
