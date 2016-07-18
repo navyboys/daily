@@ -11,6 +11,7 @@ var Redirect = require('react-router').Redirect;
 import { Router, Route, browserHistory } from 'react-router';
 import Home from './Home';
 import About from './About';
+import Chart from './Chart';
 import Header from './Header';
 
 var TodoList = require('./TodoList');
@@ -32,6 +33,7 @@ ReactDOM.render(
       <Route path="/todos/:id" component={TodoEdit} />
       <Redirect from="/" to="/todos" />
       <Route path='/about' component={ About } />
+      <Route path='/chart' component={ Chart } />
       <Route path='/home' component={ Home } />
       <Route path="*" component={NoMatch} />
     </Router>
