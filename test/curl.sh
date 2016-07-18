@@ -1,5 +1,5 @@
 # getTodos
-curl -v http://localhost:3000/api/todos?user_id=1&date=2016-07-15
+curl -v http://localhost:3000/api/todos?user_id=1&from=2016-07-01&to=2016-07-20
 
 # addTodo
 curl -v \
