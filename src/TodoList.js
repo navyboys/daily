@@ -16,6 +16,7 @@ var TodoFilter = require('./TodoFilter');
 var TodoAdd = require('./TodoAdd');
 
 var openFilterGlobal;
+var selectedDateFilterGlobal;
 
 var TodoRow = React.createClass({
   handleDelete: function(e) {
@@ -177,7 +178,7 @@ var TodoList = React.createClass({
 
   loadData: function(status="all", dateSelected="null") {
     console.log("the test "+status);
-    if (dateSelected==="null") {
+    if (dateSelected=="null") {
       var today = strftime('%F', new Date());
     } else {
       var today=dateSelected;
@@ -191,7 +192,11 @@ var TodoList = React.createClass({
   },
 
   dateFilter: function(dateSelected){
-    this.loadData("all",dateSelected);
+    if ($(".tBody").hasClass("completed")) {
+      $(".tBody").removeClass("completed");
+    }
+    selectedDateFilterGlobal = dateSelected;
+    this.loadData("all",selectedDateFilterGlobal);
   },
 
   changeFilter: function(newFilter) {
@@ -200,16 +205,16 @@ var TodoList = React.createClass({
 
   allFilter: function(todo){
     $(".tBody").removeClass("completed");
-    this.loadData("all");
+    this.loadData("all",selectedDateFilterGlobal);
   },
 
   openFilter: function(todo) {
     $(".tBody").removeClass("completed");
-    this.loadData("open");
+    this.loadData("open",selectedDateFilterGlobal);
   },
   closeFilter: function(todo) {
     $(".tBody").addClass("completed");
-    this.loadData("closed");
+    this.loadData("closed",selectedDateFilterGlobal);
 
   },
 
