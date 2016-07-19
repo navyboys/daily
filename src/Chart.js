@@ -69,7 +69,7 @@ var ColumnChart = React.createClass({
     this.loadData();
 
     FusionCharts.ready(function () {
-      var myDataSource = {
+      var chartData = {
         chart: {
           caption: 'Productivity Matters',
           subcaption: 'All vs Finished in Last 7 days',
@@ -79,11 +79,11 @@ var ColumnChart = React.createClass({
         },
           categories: [{
             category: categories
-        }],
+          }],
           dataset: [{
             seriesname: 'All',
               data: allValues
-          }, {
+            }, {
             seriesname: 'Finished',
               renderas: 'area',
               showvalues: '0',
@@ -98,7 +98,7 @@ var ColumnChart = React.createClass({
         width: 600,
         height: 400,
         dataFormat: "json",
-        dataSource: myDataSource
+        dataSource: chartData
       };
 
       React.render(
