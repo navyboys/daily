@@ -32,7 +32,8 @@ div#invite-controls {
 }
 
 .form-control {
-  color: #EF6D3B;
+  /*color: #EF6D3B;*/
+  color: black;
 
 }
 .rdtPicker {
@@ -294,7 +295,7 @@ body {
 
 .todoapp {
   background: #fff;
-  margin: 130px 0 40px 0;
+  margin: 90px 0 40px 0;
   position: relative;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
               0 25px 50px 0 rgba(0, 0, 0, 0.1);
@@ -329,13 +330,13 @@ body {
 }
 .showCalendar {
   position: absolute;
-  top: -27px;
+  top: 10px;
   right: 15px;
 }
 
 .calendar {
   position: absolute;
-  top: -35px;
+  top: -1px;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -407,10 +408,10 @@ div#log {
   transition: color 0.2s ease-out;
 }
 .todoapp h1 {
-  position: absolute;
-  top: -153px;
+  position: relative;
+  top: -75px;
   width: 100%;
-  font-size: 80px;
+  font-size: 50px;
   font-weight: 100;
   text-align: center;
   /*color: rgba(175, 47, 47, 0.15);*/
@@ -418,6 +419,42 @@ div#log {
   -webkit-text-rendering: optimizeLegibility;
   -moz-text-rendering: optimizeLegibility;
   text-rendering: optimizeLegibility;
+}
+
+.todoapp h2 {
+  color: #EF6D3B;
+  text-align: center;
+}
+.todoapp h4 {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.navbar-brand {
+  background: silver;
+  padding-top: 5px;
+}
+.navbar-text {
+  font-size: 25px;
+}
+.navbar-default {
+  background: #EF6D3B;
+}
+
+#login-btn {
+  background: #EF6D3B;
+}
+
+#foot-one {
+  position: relative;;
+  top:-150px;
+  background: #EF6D3B;
+  width:auto;
+  height: 50px;
+}
+
+div#chart-container {
+  background: #EF6D3B;
 }
 
 .new-todo,

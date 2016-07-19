@@ -225,7 +225,6 @@ var TodoList = React.createClass({
       data: JSON.stringify(todo),
       success: function(data) {
         var todo = data;
-        // We're advised not to modify the state, it's immutable. So, make a copy.
         var todosModified = this.state.todos.concat(todo);
         this.setState({todos: todosModified});
         console.log("check this"+todosModified);
