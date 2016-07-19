@@ -186,7 +186,7 @@ var TodoList = React.createClass({
     var user_id=1;
     openFilterGlobal = status;
     console.log("openFilterGlobal "+openFilterGlobal);
-    $.ajax('/api/todos/?user_id='+user_id+'&date='+today).done(function(data) {
+    $.ajax('/api/todos/?user_id='+user_id+'&from='+today+'&to='+today).done(function(data) {
       this.setState({todos: data["data"]});
     }.bind(this));
   },
