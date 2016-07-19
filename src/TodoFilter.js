@@ -34,7 +34,7 @@ var TodoFilter = React.createClass({
 
   },
   closeFilter: function(e){
-    e.preventDefault;
+    e.preventDefault();
     this.props.closeFilter();
   },
 

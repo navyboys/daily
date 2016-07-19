@@ -346,6 +346,12 @@ body {
 
 }
 
+.todoItemForm {
+  display: inline-block;
+  width: 400px;
+  margin-left: 50px;
+}
+
 div#log {
   display: none
 }
@@ -357,6 +363,20 @@ div#log {
   right: 0px;
   font-size: 20px
 }
+.destroy {
+  position: relative;
+  top: 0px;
+  left: 430px;
+  bottom: 0;
+  width: 30px;
+  height: 30px;
+  margin-top: 0;
+  font-size: 15px;
+  /*color: #cc9a9a;*/
+  color: #90C5A9;
+  margin-bottom: 0px;
+  transition: color 0.2s ease-out;
+}
 
 .markComplete {
   position: relative;
@@ -364,7 +384,7 @@ div#log {
   left: 475px;
   bottom: 0;
   width: 30px;
-  height: 20px;
+  height: 30px;
   margin-top: 0;
   font-size: 15px;
   /*color: #cc9a9a;*/
@@ -375,7 +395,7 @@ div#log {
 .editTodo {
   position: relative;
   top: 0px;
-  left: 400px;
+  left: 410px;
   bottom: 0;
   width: 30px;
   height: 30px;
@@ -521,6 +541,7 @@ label[for='toggle-all'] {
 .todo-list li.completed label {
   color: #d9d9d9;
   text-decoration: line-through;
+  transition: color 0.2s ease-out;
 }
 .completed {
   color: #d9d9d9;
@@ -548,20 +569,7 @@ label[for='toggle-all'] {
   left: 400px;
   bottom: 0px;
 }
-.destroy {
-  position: relative;
-  top: 0px;
-  left: 0px;
-  bottom: 0;
-  width: 30px;
-  height: 30px;
-  margin-top: 0;
-  font-size: 15px;
-  /*color: #cc9a9a;*/
-  color: #90C5A9;
-  margin-bottom: 0px;
-  transition: color 0.2s ease-out;
-}
+
 
 .todo-list li .destroy:hover {
   color: #af5b5e;
@@ -653,7 +661,7 @@ html .clear-completed:active {
   float: right;
   position: relative;
   line-height: 20px;
-  text-decoration: none;
+  text-decoration: line-through;;
   cursor: pointer;
 }
 
