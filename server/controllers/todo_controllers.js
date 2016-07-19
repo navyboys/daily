@@ -3,10 +3,14 @@ var Todo = require('../models/todo');
 
 module.exports.getTodos = function(req, res){
   var user_id = req.query.user_id;
-  var date = req.query.date;
-  var status = req.query.status;
+  var date_from = req.query.from;
+  var date_to = req.query.to;
 
-  Todo.where({user_id: user_id, due: date})
+  Todo.query(function(qb) {
+         qb.where('user_id', '=', user_id)
+           .andWhere('due', '>=', date_from)
+           .andWhere('due', '<=', date_to);
+       })
       .fetchAll()
       .then(function (collection) {
         res.json({error: false, data: collection.toJSON()});
