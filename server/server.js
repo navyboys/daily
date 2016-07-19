@@ -84,7 +84,6 @@ var globalIdentity;
 app.get('/token', function(request, response) {
     var identity = randomUsername(globalIdentity);
     globalIdentity = identity;
-    // var identity = "Rich";
 
     // Create an access token which we will sign and return to the client,
     // containing the grant we just created
