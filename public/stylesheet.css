@@ -1,40 +1,25 @@
-/*!
- * https://github.com/arqex/react-datetime
- */
-
-/*.todoList {
-  position: absolute;
-  margin-top: 200px
-}*/
-
-/*.pageHeader {
-  background-color: red;
-}*/
-
-/*div.header {
-  position: relative;
-
-}*/
-/*.media-container, .media-container > video {
-  position: absolute;
-  right: 40px;
-  max-width: 270px;
-}*/
 .remote-media-container > video {
   position: absolute;
   right: 40px;
   max-width: 270px;
+  padding-bottom: 50px;
 }
 .local-media-container > video{
   position: absolute;
   right: 300px;
   max-width: 270px;
+  padding-bottom: 50px;
 }
 
 div#controls {
   margin-left: 0px !important;
   padding-left: 0px;
   margin-bottom: 40px;
+  padding-bottom: 50px;
+}
+
+div#invite-controls {
+  padding-bottom: 50px;
 }
 #login-btn {
   background-color: #3F2860;
