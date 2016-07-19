@@ -3,13 +3,64 @@ var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var Link = require('react-router').Link;
 var strftime = require('strftime');
-var globalTodos = [];
+
+var allTodos = [];
+
+var allGrouped = {};
+var closedGrouped = {};
+var openGrouped = {};
+
+var categories = {};
+
+var allValues = []
+var closedValues = [];
+var openValues = [];
+
+function groupByDate(list, status) {
+  var grouped = {};
+  for (var i = 0; i < list.length; ++i) {
+    var obj = list[i];
+    if (obj.due in grouped) {
+      if (status === '' || obj.status === status) {
+        grouped[obj.due] += 1;
+      }
+    } else {
+      if (status === '' || obj.status === status) {
+        grouped[obj.due] = 1;
+      }
+    }
+  }
+  return grouped;
+}
+
+function getCategories(obj) {
+  var categories = [];
+  Object.keys(obj).forEach(function(key) {
+    categories.push({label: key});
+  });
+  return categories;
+}
+
+function getValues(categories, obj) {
+  var values = [];
+  for (var i = 0; i < categories.length; ++i) {
+    Object.keys(obj).forEach(function(key) {
+      if (key == categories[i].label) {
+        values.push({value: obj[key]});
+      }
+    });
+    if (values.length < (i + 1)) {
+      values.push({value: 0});
+    }
+  }
+  return values;
+}
 
 var ColumnChart = React.createClass({
   render: function() {
     return (
       <div id='chart-container'>
-        Chart lives here with Data: {globalTodos}
+        Chart lives here with Data: {allTodos}
       </div>
     )
   },
@@ -27,28 +78,16 @@ var ColumnChart = React.createClass({
           theme: 'ocean'
         },
           categories: [{
-            category: [{
-              label: globalTodos[0].due
-            }, {
-              label: globalTodos[1].due
-            }]
+            category: categories
         }],
           dataset: [{
             seriesname: 'All',
-              data: [{
-                value: '10'
-              }, {
-                value: '12'
-            }]
+              data: allValues
           }, {
             seriesname: 'Finished',
               renderas: 'area',
               showvalues: '0',
-              data: [{
-                value: '9'
-              }, {
-                value: '8'
-              }]
+              data: closedValues
           }]
       };
 
@@ -79,7 +118,17 @@ var ColumnChart = React.createClass({
     oneWeekAgo = strftime('%F', oneWeekAgo);
 
     $.ajax('/api/todos/?user_id='+user_id+'&from='+oneWeekAgo+'&to='+yesterday).done(function(data) {
-      globalTodos = data['data'];
+      allTodos = data['data'];
+
+      allGrouped = groupByDate(allTodos, '');
+      closedGrouped = groupByDate(allTodos, 'closed');
+      openGrouped = groupByDate(allTodos, 'open');
+
+      categories = getCategories(allGrouped);
+
+      allValues = getValues(categories, allGrouped);
+      closedValues = getValues(categories, closedGrouped);
+      openValues = getValues(categories, openGrouped);
     });
   }
 });
