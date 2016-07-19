@@ -34,7 +34,6 @@ ReactDOM.render(
       <Redirect from="/" to="/todos" />
       <Route path='/about' component={ About } />
       <Route path='/home' component={ Home } />
-
       <Route path="*" component={NoMatch} />
     </Router>
   ),
