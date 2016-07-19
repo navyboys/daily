@@ -14,7 +14,7 @@ import { Router, Route, browserHistory } from 'react-router'
 //       <Route path='/repos' component={ Repos} />
 //     </Router> ), document.getElementById('app'))
 
-const store = configureStore()
+// const store = configureStore()
 
 render(
   (
