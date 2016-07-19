@@ -3,13 +3,26 @@ var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var Link = require('react-router').Link;
 var strftime = require('strftime');
-var globalTodos = [];
+var rawData = [];
+
+function groupByDue(list) {
+  var grouped = {};
+  for (var i = 0; i < list.length; ++i) {
+    var obj = array[i];
+    if (obj.due in grouped) {
+      grouped[obj.due] += 1;
+    } else {
+      grouped[obj.due] = 1;
+    }
+  }
+  return grouped;
+}
 
 var ColumnChart = React.createClass({
   render: function() {
     return (
       <div id='chart-container'>
-        Chart lives here with Data: {globalTodos}
+        Chart lives here with Data: {rawData}
       </div>
     )
   },
@@ -18,7 +31,7 @@ var ColumnChart = React.createClass({
     this.loadData();
 
     FusionCharts.ready(function () {
-      var myDataSource = {
+      var chartData = {
         chart: {
           caption: 'Productivity Matters',
           subcaption: 'All vs Finished in Last 7 days',
@@ -28,9 +41,9 @@ var ColumnChart = React.createClass({
         },
           categories: [{
             category: [{
-              label: globalTodos[0].due
+              label: rawData[0].due
             }, {
-              label: globalTodos[1].due
+              label: rawData[1].due
             }]
         }],
           dataset: [{
@@ -59,7 +72,7 @@ var ColumnChart = React.createClass({
         width: 600,
         height: 400,
         dataFormat: "json",
-        dataSource: myDataSource
+        dataSource: chartData
       };
 
       React.render(
@@ -79,7 +92,7 @@ var ColumnChart = React.createClass({
     oneWeekAgo = strftime('%F', oneWeekAgo);
 
     $.ajax('/api/todos/?user_id='+user_id+'&from='+oneWeekAgo+'&to='+yesterday).done(function(data) {
-      globalTodos = data['data'];
+      rawData = data['data'];
     });
   }
 });
