@@ -124,6 +124,9 @@ var TodoTable = React.createClass({
           }
           break;
         default:
+          if (todo.status==="closed") {
+            $('.'+todo.id).addClass("completed")
+          }
           return <TodoRow key={todo.id} todo={todo}/>
       }
     });
@@ -220,6 +223,8 @@ var TodoList = React.createClass({
     if ($(".tBody").hasClass("completed")) {
       $(".tBody").removeClass("completed");
     }
+    $(".filterPanel").find("li").removeClass("active");
+    $("#open").addClass("active");
     selectedDateFilterGlobal = dateSelected;
     this.loadData("open",selectedDateFilterGlobal);
   },

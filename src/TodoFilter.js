@@ -14,12 +14,12 @@ var TodoFilter = React.createClass({
     console.log("Rendering TodoFilter, state=", this.state);
     return (
       <div>
-        <Panel>
+        <Panel className='filterPanel'>
           <div className="">
             <ul className="nav nav-tabs">
-              <li className="active"><a data-toggle="tab" onClick={this.openFilter}>Open</a></li>
-              <li><a data-toggle="tab" onClick={this.closeFilter}>Complete</a></li>
-              <li><a data-toggle="tab" onClick={this.allFilter}>All</a></li>
+              <li id='open' className="active"><a data-toggle="tab" onClick={this.openFilter}>Open</a></li>
+              <li id='closed'><a data-toggle="tab" onClick={this.closeFilter}>Complete</a></li>
+              <li id='all'><a data-toggle="tab" onClick={this.allFilter}>All</a></li>
             </ul>
         </div>
         </Panel>
