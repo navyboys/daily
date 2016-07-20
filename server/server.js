@@ -71,9 +71,10 @@ passport.use(new githubStrategy({
 app.get('/auth/github', passport.authenticate('github'));
 
 // GitHub will call this URL
-app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/' }),
+app.get('/auth/github/callback', passport.authenticate('github',
+  { failureRedirect: '/home' }),
   function(req, res) {
-    res.redirect('/');
+    res.redirect('/todos');
     //redirect to SSL server for video chat to work
     // res.redirect('https://192.168.1.65:9000');
   }

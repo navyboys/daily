@@ -147,7 +147,7 @@ var TodoList = React.createClass({
       <div className='todoList'>
           <NavBar />
           <Header />
-          <p className='text-center'>Welcome, {this.state.username} with {this.state.token}</p>
+          <p className='text-center'>Welcome, {this.state.username}</p>
           <CurrentDay dateFilter={this.dateFilter} />
           <ShowCalendarBtn />
             <TodoFilter openFilter={this.openFilter}
@@ -194,13 +194,25 @@ var TodoList = React.createClass({
     openFilterGlobal = status;
     console.log("openFilterGlobal "+openFilterGlobal);
 
+    var github_issues = [];
     $.ajax('/userinfo').done(function(data) {
-      this.setState({username: data["username"]});
-      this.setState({token: data["token"]});
-    }.bind(this));
+      this.setState({username: data['username']});
+      this.setState({token: data['token']});
 
-    $.ajax('/api/todos/?user_id='+user_id+'&from='+today+'&to='+today).done(function(data) {
-      this.setState({todos: data["data"]});
+      var url = 'https://api.github.com/issues?access_token=' + data['token'];
+      $.ajax(url).done(function(data) {
+        for (var i = 0; i < data.length; i++) {
+          var issue = {};
+          issue['id'] = data[i].id;
+          issue['title'] = '(Github) ' + data[i].title;
+          github_issues.push(issue);
+        }
+
+        $.ajax('/api/todos/?user_id='+user_id+'&from='+today+'&to='+today).done(function(data) {
+          console.log('github_issues: ' + github_issues);
+          this.setState({todos: data['data'].concat(github_issues)});
+        }.bind(this));
+      }.bind(this));
     }.bind(this));
   },
 
