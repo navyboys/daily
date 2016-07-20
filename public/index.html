@@ -25,6 +25,7 @@
     <link type="text/css" rel="stylesheet" href="./bootstrap-social.css" />
   </head>
   <body>
+    
     <div class="todoapp" id="main">
     </div>
     <div id="controls">
@@ -32,13 +33,16 @@
         <div id="local-conversation"></div>
       </div>
       <div id="invite-controls">
-        <p class="instructions">Connect to:</p>
+        <p class="instructions"><strong>Video chat!</strong></p>
         <input id="invite-to" type="text" placeholder="Who do you want to chat with?" />
         <button type='button' bsStyle='primary' id="button-invite">Connect!</button>
       </div>
       <div id="log">
         <p>&gt;&nbsp;<span id="log-content">Preparing to listen</span>...</p>
       </div>
+    </div>
+    <div id='foot-one'>
+
     </div>
     <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
     <script src="https://media.twiliocdn.com/sdk/js/conversations/v0.13/twilio-conversations.min.js"></script>
