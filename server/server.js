@@ -49,15 +49,21 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-var githubAccessToken = '';
+var token = '';
+var username = '';
+
 passport.use(new githubStrategy({
-    clientID: '138ef0834313d69d7069',
-    clientSecret: 'f6831300c2f47ced6a5e179ef7416f4c057147d2',
-    callbackURL: "http://localhost:3000/auth/github/callback"
+    clientID: process.env.GITHUB_CLENT_ID,
+    clientSecret: process.env.GITHUB_CLENT_SECRET,
+    callbackURL: 'http://localhost:3000/auth/github/callback',
+    scope: ['repo']
   },
   function(accessToken, refreshToken, profile, done) {
-    githubAccessToken = accessToken;
-    return done(null, profile);
+    process.nextTick(function() {
+      token = accessToken;
+      username = profile.displayName;
+      return done(null, profile);
+    });
   }
 ));
 
@@ -67,12 +73,15 @@ app.get('/auth/github', passport.authenticate('github'));
 // GitHub will call this URL
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/' }),
   function(req, res) {
-    req.session.githubAccessToken = githubAccessToken;
-    // res.redirect('/');
+    res.redirect('/');
     //redirect to SSL server for video chat to work
-    res.redirect('https://192.168.1.65:9000');
+    // res.redirect('https://192.168.1.65:9000');
   }
 );
+
+app.get('/userinfo', function(req, res){
+  res.json({username: username, token: token});
+});
 
 app.get('/logout', function(req, res){
   req.logout();
