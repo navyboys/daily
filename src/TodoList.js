@@ -136,13 +136,14 @@ var TodoTable = React.createClass({
 
 var TodoList = React.createClass({
   getInitialState: function() {
-    return {todos: []};
+    return {todos: [], username: '', token: ''};
   },
   render: function() {
     console.log("Rendering TodoList, num items:", this.state.todos.length);
     return (
       <div className='todoList'>
           <Header />
+          <p className='text-center'>Welcome, {this.state.username} with {this.state.token}</p>
           <CurrentDay dateFilter={this.dateFilter} />
           <ShowCalendarBtn />
           <TodoTable todos={this.state.todos}/>
@@ -186,6 +187,12 @@ var TodoList = React.createClass({
     var user_id=1;
     openFilterGlobal = status;
     console.log("openFilterGlobal "+openFilterGlobal);
+
+    $.ajax('/userinfo').done(function(data) {
+      this.setState({username: data["username"]});
+      this.setState({token: data["token"]});
+    }.bind(this));
+
     $.ajax('/api/todos/?user_id='+user_id+'&from='+today+'&to='+today).done(function(data) {
       this.setState({todos: data["data"]});
     }.bind(this));
