@@ -61,11 +61,9 @@ function getValues(categories, obj) {
 var ColumnChart = React.createClass({
   render: function() {
     return (
-      <div>
         <div id='chart-container'>
           Chart lives here with Data: {allTodos}
         </div>
-      </div>
     )
   },
 
@@ -108,6 +106,7 @@ var ColumnChart = React.createClass({
       ReactDOM.render(
         < react_fc.FusionCharts {...chartConfigs} />,
         document.getElementById("chart-container")
+
       );
     });
   },
