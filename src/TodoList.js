@@ -7,10 +7,13 @@ var strftime = require('strftime');
 var FormGroup = require('react-bootstrap/lib/FormGroup');
 var ControlLabel = require('react-bootstrap/lib/ControlLabel');
 var FormControl = require('react-bootstrap/lib/FormControl');
+var Modal = require('react-modal');
 
 import CurrentDay from './CurrentDay'
 import Header from './Header'
 import ShowCalendarBtn from './ShowCalendarBtn'
+import NavBar from './NavBar'
+
 
 var TodoFilter = require('./TodoFilter');
 var TodoAdd = require('./TodoAdd');
@@ -28,8 +31,8 @@ var TodoRow = React.createClass({
     this.props.todo.title=e.target.value;
     var $currentTodo=$("."+this.props.todo.id).children()[3].children[0].children[0].children[0];
     console.log("in changeHandler");
-    console.log("title "+this.props.todo.title);
-    $currentTodo.value=window.prompt("Update the task");
+    console.log("title "+$currentTodo.value);
+    $currentTodo.value=window.prompt("Update the task",$currentTodo.value);
     this.updateTodo({title: $currentTodo.value, status: this.props.todo.status});
   },
   handleStatusChange: function(){
@@ -142,15 +145,18 @@ var TodoList = React.createClass({
     console.log("Rendering TodoList, num items:", this.state.todos.length);
     return (
       <div className='todoList'>
+          <NavBar />
           <Header />
           <p className='text-center'>Welcome, {this.state.username} with {this.state.token}</p>
           <CurrentDay dateFilter={this.dateFilter} />
           <ShowCalendarBtn />
+            <TodoFilter openFilter={this.openFilter}
+              closeFilter={this.closeFilter} submitHandler={this.changeFilter} initFilter={this.props.location.query}
+              allFilter={this.allFilter}/>
           <TodoTable todos={this.state.todos}/>
           <TodoAdd addTodo={this.addTodo} />
-          <TodoFilter openFilter={this.openFilter}
-            closeFilter={this.closeFilter} submitHandler={this.changeFilter} initFilter={this.props.location.query}
-            allFilter={this.allFilter}/>
+
+          <editModal openModal={this.openModal}/>
         </div>
     )
   },
@@ -232,7 +238,6 @@ var TodoList = React.createClass({
       data: JSON.stringify(todo),
       success: function(data) {
         var todo = data;
-        // We're advised not to modify the state, it's immutable. So, make a copy.
         var todosModified = this.state.todos.concat(todo);
         this.setState({todos: todosModified});
         console.log("check this"+todosModified);
@@ -246,5 +251,63 @@ var TodoList = React.createClass({
   },
 
 });
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
+
+
+var editModal = React.createClass({
+
+  getInitialState: function() {
+    return { modalIsOpen: false };
+  },
+
+  openModal: function() {
+    this.setState({modalIsOpen: true});
+  },
+
+  afterOpenModal: function() {
+    // references are now sync'd and can be accessed.
+    this.refs.subtitle.style.color = '#f00';
+  },
+
+  closeModal: function() {
+    this.setState({modalIsOpen: false});
+  },
+
+  render: function() {
+    return (
+      <div>
+        <button onClick={this.openModal}>Open Modal</button>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          style={customStyles} >
+
+          <h2 ref="subtitle">Hello</h2>
+          <button onClick={this.closeModal}>close</button>
+          <div>I am a modal</div>
+          <form>
+            <input />
+            <button>tab navigation</button>
+            <button>stays</button>
+            <button>inside</button>
+            <button>the modal</button>
+          </form>
+        </Modal>
+      </div>
+    );
+  }
+});
+
+// ReactDOM.render(<App/>, appElement);
 
 module.exports = TodoList;

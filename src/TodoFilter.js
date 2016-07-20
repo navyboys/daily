@@ -15,9 +15,13 @@ var TodoFilter = React.createClass({
     return (
       <div>
         <Panel>
-        <Button type='button' bsStyle='primary' label="All tasks" className='filterAllBtn' onClick={this.allFilter}>All tasks</Button>
-        <Button type='button' bsStyle='danger' label="Open tasks" className='filterOpenBtn' onClick={this.openFilter}>Open tasks</Button>
-        <Button type='button' bsStyle='success' label="Closed tasks" className='filterCloseBtn' onClick={this.closeFilter}>Finished tasks</Button>
+          <div className="">
+            <ul className="nav nav-tabs">
+              <li className="active"><a data-toggle="tab" onClick={this.openFilter}>Open</a></li>
+              <li><a data-toggle="tab" onClick={this.closeFilter}>Complete</a></li>
+              <li><a data-toggle="tab" onClick={this.allFilter}>All</a></li>
+            </ul>
+        </div>
         </Panel>
       </div>
     )
@@ -34,7 +38,7 @@ var TodoFilter = React.createClass({
 
   },
   closeFilter: function(e){
-    e.preventDefault;
+    e.preventDefault();
     this.props.closeFilter();
   },
 
