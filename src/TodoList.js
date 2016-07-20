@@ -31,8 +31,8 @@ var TodoRow = React.createClass({
     this.props.todo.title=e.target.value;
     var $currentTodo=$("."+this.props.todo.id).children()[3].children[0].children[0].children[0];
     console.log("in changeHandler");
-    console.log("title "+this.props.todo.title);
-    $currentTodo.value=window.prompt("Update the task");
+    console.log("title "+$currentTodo.value);
+    $currentTodo.value=window.prompt("Update the task",$currentTodo.value);
     this.updateTodo({title: $currentTodo.value, status: this.props.todo.status});
   },
   handleStatusChange: function(){
