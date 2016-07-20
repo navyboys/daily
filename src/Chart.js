@@ -3,6 +3,8 @@ var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var Link = require('react-router').Link;
 var strftime = require('strftime');
+var NavBar = require('./NavBar');
+var Header = require('./Header');
 
 var allTodos = [];
 

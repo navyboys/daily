@@ -70,7 +70,7 @@ app.get('/auth/github/callback', passport.authenticate('github', { failureRedire
     req.session.githubAccessToken = githubAccessToken;
     // res.redirect('/');
     //redirect to SSL server for video chat to work
-    res.redirect('https://10.10.41.252:9000');
+    res.redirect('https://192.168.1.65:9000');
   }
 );
 

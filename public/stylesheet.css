@@ -330,12 +330,12 @@ body {
 }
 .showCalendar {
   position: absolute;
-  top: 10px;
+  top: 145px;
   right: 15px;
 }
 
 .calendar {
-  position: absolute;
+  position: relative;
   top: -1px;
   margin-left: auto;
   margin-right: auto;
@@ -409,7 +409,7 @@ div#log {
 }
 .todoapp h1 {
   position: relative;
-  top: -75px;
+  top: -8px;
   width: 100%;
   font-size: 50px;
   font-weight: 100;
@@ -420,6 +420,7 @@ div#log {
   -moz-text-rendering: optimizeLegibility;
   text-rendering: optimizeLegibility;
 }
+
 
 .todoapp h2 {
   color: #EF6D3B;
@@ -439,6 +440,13 @@ div#log {
 }
 .navbar-default {
   background: #EF6D3B;
+  /*position: relative;*/
+  /*top: -90px;*/
+  width: 550px;
+}
+
+.navbar-nav {
+  font-size: 20px;
 }
 
 #login-btn {
@@ -446,6 +454,7 @@ div#log {
 }
 
 #foot-one {
+  display:none;
   position: relative;;
   top:-150px;
   background: #EF6D3B;
