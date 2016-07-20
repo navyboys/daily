@@ -149,11 +149,12 @@ var TodoList = React.createClass({
           <Header />
           <CurrentDay dateFilter={this.dateFilter} />
           <ShowCalendarBtn />
+            <TodoFilter openFilter={this.openFilter}
+              closeFilter={this.closeFilter} submitHandler={this.changeFilter} initFilter={this.props.location.query}
+              allFilter={this.allFilter}/>
           <TodoTable todos={this.state.todos}/>
           <TodoAdd addTodo={this.addTodo} />
-          <TodoFilter openFilter={this.openFilter}
-            closeFilter={this.closeFilter} submitHandler={this.changeFilter} initFilter={this.props.location.query}
-            allFilter={this.allFilter}/>
+
           <editModal openModal={this.openModal}/>
         </div>
     )
