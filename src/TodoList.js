@@ -183,7 +183,7 @@ var TodoList = React.createClass({
     }
   },
 
-  loadData: function(status="all", dateSelected="null") {
+  loadData: function(status="open", dateSelected="null") {
     console.log("the test "+status);
     if (dateSelected=="null") {
       var today = strftime('%F', new Date());
@@ -221,7 +221,7 @@ var TodoList = React.createClass({
       $(".tBody").removeClass("completed");
     }
     selectedDateFilterGlobal = dateSelected;
-    this.loadData("all",selectedDateFilterGlobal);
+    this.loadData("open",selectedDateFilterGlobal);
   },
 
   changeFilter: function(newFilter) {
