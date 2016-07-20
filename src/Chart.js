@@ -3,6 +3,8 @@ var ReactDOM = require('react-dom');
 var $ = require('jquery');
 var Link = require('react-router').Link;
 var strftime = require('strftime');
+var NavBar = require('./NavBar');
+var Header = require('./Header');
 
 var allTodos = [];
 
@@ -59,9 +61,9 @@ function getValues(categories, obj) {
 var ColumnChart = React.createClass({
   render: function() {
     return (
-      <div id='chart-container'>
-        Chart lives here with Data: {allTodos}
-      </div>
+        <div id='chart-container'>
+          Chart lives here with Data: {allTodos}
+        </div>
     )
   },
 
@@ -95,15 +97,16 @@ var ColumnChart = React.createClass({
         id: "all-finished-chart",
         renderAt: "all-finished-chart-container",
         type: "mscombi2d",
-        width: 600,
+        width: 550,
         height: 400,
         dataFormat: "json",
         dataSource: chartData
       };
 
-      React.render(
+      ReactDOM.render(
         < react_fc.FusionCharts {...chartConfigs} />,
         document.getElementById("chart-container")
+
       );
     });
   },
