@@ -74,9 +74,9 @@ app.get('/auth/github', passport.authenticate('github'));
 app.get('/auth/github/callback', passport.authenticate('github',
   { failureRedirect: '/home' }),
   function(req, res) {
-    // res.redirect('/todos');
+    res.redirect('/todos');
     //redirect to SSL server for video chat to work
-    res.redirect('https://192.168.1.65:9000');
+    // res.redirect('https://192.168.1.65:9000');
   }
 );
 
