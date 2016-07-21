@@ -1,3 +1,6 @@
+# findTodo by github_url
+curl -v http://localhost:3000/api/todo?github_url=https://api.github.com/repos/navyboys/daily/issues/13
+
 # getTodos
 curl -v http://localhost:3000/api/todos?user_id=1&from=2016-07-11&to=2016-07-17
 
@@ -26,4 +29,12 @@ curl -v \
   http://localhost:3000/api/users
 
 # get Github issues
-curl -v http://api.github.com/issues?access_token=b806bd83c5ab5d21d012ba007c1a942a7b106094
+curl -v https://api.github.com/issues?access_token=c5269c80830119655d24b2f8962274212abe9b57
+
+# get Github repo issue
+curl -v https://api.github.com/repos/navyboys/daily/issues
+
+# update Github issues
+curl -i -X "PATCH" \
+  --data '{"state":"open","title":"Title changed by daily"}' \
+  https://api.github.com/repos/navyboys/daily/issues/24?access_token=c5269c80830119655d24b2f8962274212abe9b57
