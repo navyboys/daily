@@ -11,7 +11,7 @@ var Home = React.createClass({
           <div>
             <h2>welcome to daily</h2>
             <h4>please sign in below with your Github credentials, or <a href="#">create a new account</a></h4>
-            <img src='hero.png' width="550" height="600"></img>
+            <img src='hero.png' width="550" height="716"></img>
           </div>
           <div id='login-btn' className='text-center'>
             <form onSubmit={this.handleSubmit}>
