@@ -15,9 +15,6 @@ if (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia) {
 $.getJSON('/token', function(data) {
     identity = data.identity;
     var accessManager = new Twilio.AccessManager(data.token);
-
-    // Check the browser console to see your generated identity.
-    // Send an invite to yourself if you want!
     console.log(identity);
 
     // Create a Conversations Client and connect to Twilio
@@ -30,7 +27,6 @@ $.getJSON('/token', function(data) {
 // Successfully connected!
 function clientConnected() {
     document.getElementById('invite-controls').style.display = 'block';
-    // log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
 
     conversationsClient.on('invite', function (invite) {
         log('Incoming invite from: ' + invite.from);
@@ -83,22 +79,6 @@ function conversationStarted(conversation) {
         activeConversation = null;
     });
 }
-
-//  Local video preview
-// document.getElementById('button-preview').onclick = function () {
-//     if (!previewMedia) {
-//         previewMedia = new Twilio.Conversations.LocalMedia();
-//         Twilio.Conversations.getUserMedia().then(
-//         function (mediaStream) {
-//             previewMedia.addStream(mediaStream);
-//             previewMedia.attach('#local-media');
-//         },
-//         function (error) {
-//             console.error('Unable to access local media', error);
-//             log('Unable to access Camera and Microphone');
-//         });
-//     };
-// };
 
 // Activity log
 function log(message) {
