@@ -14,6 +14,7 @@ import Header from './Header'
 import ShowCalendarBtn from './ShowCalendarBtn'
 import NavBar from './NavBar'
 
+var github_access_token = '';
 
 var TodoFilter = require('./TodoFilter');
 var TodoAdd = require('./TodoAdd');
@@ -49,14 +50,27 @@ var TodoRow = React.createClass({
   },
   updateTodo: function(todo) {
     console.log("Updating todo");
+    if (this.props.todo.github_url !== undefined) {
+      var issue = { title: todo.title, state: todo.status};
+      $.ajax({
+        type: 'PATCH',
+        data: JSON.stringify(issue),
+        url: this.props.todo.github_url + '?access_token=' + github_access_token,
+        success: function(savedIssue) {
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.log("Error updating todo:", err);
+        }
+      });
+    }
+
     $.ajax({
       type: 'PUT', url: '/api/todos/'+this.props.todo.id, contentType: 'application/json',
       data: JSON.stringify(todo),
       success: function(data) {
       }.bind(this),
       error: function(xhr, status, err) {
-        // ideally, show error to user.
-        console.log("Error adding todo:", err);
+        console.log("Error updating todo:", err);
       }
     });
   },
@@ -195,22 +209,47 @@ var TodoList = React.createClass({
     console.log("openFilterGlobal "+openFilterGlobal);
 
     var github_issues = [];
-    $.ajax('/userinfo').done(function(data) {
-      this.setState({username: data['username']});
-      this.setState({token: data['token']});
+    $.ajax('/userinfo').done(function(user) {
+      this.setState({username: user['username']});
+      this.setState({token: user['token']});
+      github_access_token = user['token'];
 
-      var url = 'https://api.github.com/issues?access_token=' + data['token'];
-      $.ajax(url).done(function(data) {
-        for (var i = 0; i < data.length; i++) {
-          var issue = {};
-          issue['id'] = data[i].id;
-          issue['title'] = '(Github) ' + data[i].title;
-          github_issues.push(issue);
-        }
+      var url = 'https://api.github.com/issues?access_token=' + user['token'];
+      $.ajax(url).done(function(issues) {
+        for (var i = 0; i < issues.length; i++) {
+          var newTodo = {};
+          newTodo['user_id'] = user_id;
+          newTodo['title'] = '(Github) ' + issues[i].title;
+          newTodo['status'] = issues[i].state;
+          newTodo['origin'] = issues[i].origin;
+          newTodo['github_url'] = issues[i].url;
 
-        $.ajax('/api/todos/?user_id='+user_id+'&from='+today+'&to='+today).done(function(data) {
-          console.log('github_issues: ' + github_issues);
-          this.setState({todos: data['data'].concat(github_issues)});
+          $.ajax({
+            type: 'GET', url: '/api/todo?github_url=' + issues[i].url,
+            success: function(foundTodo) {
+              if (foundTodo.error === true) {
+                // Using addTodo which calls loadData() can cause uninfinit loop
+                $.ajax({
+                  type: 'POST', url: '/api/todos', contentType: 'application/json',
+                  data: JSON.stringify(newTodo),
+                  success: function(savedTodo) {
+                    var todo = savedTodo;
+                    var todosModified = this.state.todos.concat(todo);
+                    this.setState({todos: todosModified});
+                  }.bind(this),
+                  error: function(xhr, status, err) {
+                    console.log("Error adding todo:", err);
+                  }
+                });
+              }
+            }.bind(this),
+            error: function(xhr, status, err) {
+            }
+          });
+        };
+
+        $.ajax('/api/todos/?user_id='+user_id+'&from='+today+'&to='+today).done(function(todos) {
+          this.setState({todos: todos['data']});
         }.bind(this));
       }.bind(this));
     }.bind(this));

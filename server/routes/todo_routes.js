@@ -6,6 +6,8 @@ var TodoController = require('../controllers/todo_controllers');
 todo_router.route('/todos').get(TodoController.getTodos);
 // Add a new todo
 todo_router.route('/todos').post(TodoController.addTodo);
+// find a todo by github_url
+todo_router.route('/todo').get(TodoController.findTodoByGithubUrl);
 // Update a todo
 todo_router.route('/todos/:id').delete(TodoController.deleteTodo);
 // Delete a todo
