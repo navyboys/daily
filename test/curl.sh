@@ -1,3 +1,6 @@
+# findTodo by github_url
+curl -v http://localhost:3000/api/todo?github_url=https://api.github.com/repos/navyboys/daily/issues/13
+
 # getTodos
 curl -v http://localhost:3000/api/todos?user_id=1&from=2016-07-11&to=2016-07-17
 

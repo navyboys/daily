@@ -1,6 +1,19 @@
 var strftime = require('strftime');
 var Todo = require('../models/todo');
 
+module.exports.findTodoByGithubUrl = function(req, res){
+  var github_url = req.query.github_url;
+
+  Todo.where({github_url: github_url})
+      .fetch()
+      .then(function (collection) {
+        res.json({error: false, data: collection.toJSON()});
+      })
+      .catch(function (err) {
+        res.status(500).json({error: true, data: {message: err.message}});
+      });
+};
+
 module.exports.getTodos = function(req, res){
   var user_id = req.query.user_id;
   var date_from = req.query.from;
