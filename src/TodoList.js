@@ -14,6 +14,7 @@ import Header from './Header'
 import ShowCalendarBtn from './ShowCalendarBtn'
 import NavBar from './NavBar'
 
+var github_access_token = '';
 
 var TodoFilter = require('./TodoFilter');
 var TodoAdd = require('./TodoAdd');
@@ -49,16 +50,29 @@ var TodoRow = React.createClass({
   },
   updateTodo: function(todo) {
     console.log("Updating todo");
-    $.ajax({
-      type: 'PUT', url: '/api/todos/'+this.props.todo.id, contentType: 'application/json',
-      data: JSON.stringify(todo),
-      success: function(data) {
-      }.bind(this),
-      error: function(xhr, status, err) {
-        // ideally, show error to user.
-        console.log("Error adding todo:", err);
-      }
-    });
+    if (this.props.todo.github_url !== undefined) {
+      var issue = { title: todo.title, state: todo.status};
+      $.ajax({
+        type: 'PATCH',
+        data: JSON.stringify(issue),
+        url: this.props.todo.github_url + '?access_token=' + github_access_token,
+        success: function(data) {
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.log("Error updating todo:", err);
+        }
+      });
+    } else {
+      $.ajax({
+        type: 'PUT', url: '/api/todos/'+this.props.todo.id, contentType: 'application/json',
+        data: JSON.stringify(todo),
+        success: function(data) {
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.log("Error updating todo:", err);
+        }
+      });
+    }
   },
   deleteTodo: function(todo) {
     console.log("Deleting todo:", todo);
@@ -198,6 +212,7 @@ var TodoList = React.createClass({
     $.ajax('/userinfo').done(function(data) {
       this.setState({username: data['username']});
       this.setState({token: data['token']});
+      github_access_token = data['token'];
 
       var url = 'https://api.github.com/issues?access_token=' + data['token'];
       $.ajax(url).done(function(data) {
@@ -205,6 +220,8 @@ var TodoList = React.createClass({
           var issue = {};
           issue['id'] = data[i].id;
           issue['title'] = '(Github) ' + data[i].title;
+          issue['status'] = data[i].state;
+          issue['github_url'] = data[i].url;
           github_issues.push(issue);
         }
 
