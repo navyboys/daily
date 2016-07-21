@@ -23,6 +23,9 @@ class NavBar extends Component {
                 <li><a href="/">Home </a></li>
                 <li><a href="/chart">Chart</a></li>
               </ul>
+              <ul className="nav navbar-nav navbar-right">
+                <li><a href="/logout">Logout </a></li>
+              </ul>
           </div>
         </div>
         </nav>

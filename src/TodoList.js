@@ -247,7 +247,20 @@ var TodoList = React.createClass({
               }
             }.bind(this),
             error: function(xhr, status, err) {
-            }
+              // Using addTodo which calls loadData() can cause uninfinit loop
+              $.ajax({
+                type: 'POST', url: '/api/todos', contentType: 'application/json',
+                data: JSON.stringify(newTodo),
+                success: function(savedTodo) {
+                  var todo = savedTodo;
+                  var todosModified = this.state.todos.concat(todo);
+                  this.setState({todos: todosModified});
+                }.bind(this),
+                error: function(xhr, status, err) {
+                  console.log("Error adding todo:", err);
+                }
+              });
+            }.bind(this)
           });
         };
 
