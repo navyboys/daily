@@ -2,7 +2,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var Panel = require('react-bootstrap/lib/Panel');
-// var Input = require('react-bootstrap/lib/Input');
 var Button = require('react-bootstrap/lib/Button');
 var FormGroup = require('react-bootstrap/lib/FormGroup');
 var ControlLabel = require('react-bootstrap/lib/ControlLabel');

@@ -36,14 +36,11 @@ module.exports.getTodos = function(req, res){
 module.exports.addTodo = function(req, res){
   if (!req.body.user_id || !req.body.title) {
     res.status(403).end();
-    console.log("first if");
   }
-  console.log("in addTodo");
+
   var newTodo = new Todo(req.body);
   newTodo.set('status', 'open');
   newTodo.set('due', strftime('%F', new Date()));
-  console.log("just before calling save");
-  // debugger;
   newTodo.save()
          .then(function (todo) {
           res.json({error: false, data: {id: todo.id}});

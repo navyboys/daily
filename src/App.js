@@ -1,12 +1,7 @@
-// var React = require('react');
 import React from 'react'
 import 'babel-polyfill'
-// import { render } from 'react-dom'
-
-// var ReactDOM = require('react-dom');
 import ReactDOM from 'react-dom';
 var Redirect = require('react-router').Redirect;
-
 
 import { Router, Route, browserHistory } from 'react-router';
 import Home from './Home';
@@ -43,5 +38,3 @@ ReactDOM.render(
   ),
   document.getElementById('main')
 );
-
-// <Route path='/chat' component={ VideoChat } />
